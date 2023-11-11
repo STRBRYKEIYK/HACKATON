@@ -16,15 +16,22 @@ body {
 .signup-box {
     background-color: #ffffff;
     padding: 20px 50px 40px 50px;
-    float:right;
     text-align: center;
     border-radius: 20px;
     box-shadow: #2022259f insets;
+    margin-bottom: 25px;
+    max-width: 700px;
+}
+
+label {
+
+    float: left;
+    margin-left: 70px;
 }
 
 input {
     outline: none;
-    font-size: 23px;
+    font-size: 15px;
 }
 
 .input-boxes {
@@ -32,8 +39,29 @@ input {
     border-radius: 20px;
     background-color: #f0f0f0;
     width: 500px;
-    text-align: center;
-    padding: 10px;
+    padding: 7px;
+    margin-bottom: 20px;
+}
+
+.input-boxes-half {
+    border: 1px;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    width: 225px;
+    padding: 7px;
+    margin-bottom: 25px;
+}
+
+#middle-initial {
+    width: 50px;
+}
+
+#select-campus {
+    width: 500px;
+    height: auto;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
 }
 
 #request-button {
