@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>REQUEST</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/signup.css" />
+    <!--for email-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <style>
+        .message {
+            display: flex;
+            color: black;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Request Account</h1>
+            
+                <br>
+                <label for="student-id">StudentID:</label>
+                <br>
+                <input class="input-boxes" type="text" id="student-id" placeholder="Enter StudentID">
+                <br>
+
+                <label for="first-name">Name:</label>
+                <br>
+                <input class="input-boxes-half" type="text" id="first-name" placeholder="First Name">
+                <input class="input-boxes-half" type="text" id="middle-initial" placeholder="M.I.">
+                <input class="input-boxes-half" type="text" id="last-name" placeholder="Last Name">
+
+                <label for="email">Email Address:</label>
+                <br>
+                <input class="input-boxes" type="text" id="email" placeholder="Enter Email Address (Gclassroom email)">
+                <br>
+                <p>Already have an account? <b><a href="index.html">Log in</a></b></p>
+                <br>
+                <button id="request_button">Request</button>
+            
+        </div>
+    </div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+//import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDFWV4k9-XmABgNGmleyXLTcuEn41rMHK8",
+    authDomain: "hackathon-26f12.firebaseapp.com",
+    databaseURL: "https://hackathon-26f12-default-rtdb.firebaseio.com",
+    projectId: "hackathon-26f12",
+    storageBucket: "hackathon-26f12.appspot.com",
+    messagingSenderId: "1071789540560",
+    appId: "1:1071789540560:web:6227da20f3a3a3a9ab0ad5"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+    // event listener to the request-button
+request_button.addEventListener('click', async () => {
+    let studID = document.getElementById('student-id').value
+    let fullName = document.getElementById('first-name').value +" "+ document.getElementById('middle-initial').value 
+            +" "+ document.getElementById('last-name').value
+    let email = document.getElementById('email').value
+
+
+    //function to generate random number and special character to password
+    function generatePasswExtension() {
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    const specialCharacters = '!#*_';
+
+        //put all characters in one variable (except special character)
+    const allCharacters = uppercaseLetters + lowercaseLetters + numbers;
+    let passwordExt = '';
+
+    // Include at least one uppercase letter, one number, and one special character
+    passwordExt += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+    passwordExt += numbers[Math.floor(Math.random() * numbers.length)];
+    passwordExt += specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+
+    // Complete the rest of the password with random characters
+    for (let i = 1; i < 5; i++) {
+        passwordExt += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+    }
+    return passwordExt;
+    }
+
+    // const for generate a random password extension for the user
+    const passwExtension = generatePasswExtension();
+
+        
+    //adding the user to database
+    try {
+        await setDoc(doc(db, "USERS", studID), {
+            studentID : studID,
+            name: fullName,
+            email: email,
+            password : document.getElementById('last-name').value + passwExtension
+            })
+        console.log('Request Success');
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
+
+    
+    //Sending Email
+    Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "guzmancarlo.123@gmail.com",
+    Password : "BC0676D842C915962D03B202E85BE57229E7",
+    To : email,
+    From : "guzmancarlo.123@gmail.com",
+    Subject : "PMF Viewer Account",
+    Body : "<h2>Hello, " + fullName 
+        + "<br> Thank you for Registering to our website, here's your account details:" 
+        + "<br> StudentID: "  + studID 
+        + "<br> Password: " + document.getElementById('last-name').value + passwExtension   
+    }).then(
+    alert('Please check your INBOX or SPAM in your Gmail')
+    );
+    
+});
+</script>
+
+</body>
+
+</html>
