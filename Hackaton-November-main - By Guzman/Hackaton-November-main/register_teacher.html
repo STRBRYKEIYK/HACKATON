@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>REQUEST</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/register.css" />
+    <!--for email-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <style>
+        .message {
+            display: flex;
+            color: black;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Create Teacher Account</h1>
+            
+                <br>
+                <label for="teacher-id">TeacherID:</label>
+                <br>
+                <input class="input-boxes" type="text" id="teacher-id" placeholder="Enter TeacherID">
+                <br>
+
+                <label for="first-name">Name:</label>
+                <br>
+                <input class="input-boxes-half" type="text" id="first-name" placeholder="First Name">
+                <input class="input-boxes-half" type="text" id="middle-initial" placeholder="M.I.">
+                <input class="input-boxes-half" type="text" id="last-name" placeholder="Last Name">
+                <br>
+                
+                <label for="password">Password:</label>
+                <br>
+                <input class="input-boxes" type="text" id="password" placeholder="Create Password">
+                <br>
+                <p>Already have an account? <b><a href="teacherlogin.html">Log in</a></b></p>
+                <br>
+                <button id="register_button">Request</button>
+            
+        </div>
+    </div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+//import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDFWV4k9-XmABgNGmleyXLTcuEn41rMHK8",
+    authDomain: "hackathon-26f12.firebaseapp.com",
+    databaseURL: "https://hackathon-26f12-default-rtdb.firebaseio.com",
+    projectId: "hackathon-26f12",
+    storageBucket: "hackathon-26f12.appspot.com",
+    messagingSenderId: "1071789540560",
+    appId: "1:1071789540560:web:6227da20f3a3a3a9ab0ad5"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+    // event listener to the request-button
+register_button.addEventListener('click', async () => {
+
+let teacherID = document.getElementById('teacher-id').value
+let fName = document.getElementById('first-name').value
+let mI = document.getElementById('middle-initial').value
+let lName = document.getElementById('last-name').value
+let password = document.getElementById('password').value
+
+
+try {
+    await setDoc(doc(db, "TEACHER_LIST", teacherID), {
+        teacherID : teacherID,
+        name : fName + " " + mI +" "+ lName,
+        password : password
+    })
+    alert('SUCCESS')
+} catch (error) {
+    console.error(error)
+}
+});
+
+</script>
+
+</body>
+
+</html>
