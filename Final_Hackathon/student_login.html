@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+		<title>LOGIN</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/student_login.css" />
+        <meta http-equiv="refresh" content="">
+	</head>
+    <body>
+        <div class="container">
+            <div class = "studLogin-box">
+                <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Student Login</h1>
+                
+                    <br>
+                    <input class="input-boxes" type="text" id="student_id" placeholder="StudentID">
+                    <hr>
+                    <br>
+                    <input class="input-boxes" type="password" id="password" placeholder="Password">
+                    <hr>
+                    <br><br><br>
+                    <button id="studLogin_button">Log in</button>
+                
+                <p><a href="teacher_login.html">LOGIN AS TEACHER</a></p>
+                <br>
+                <p>Don't have an account? <b><a href="Student_Registration.html">Request Account</a></b></p>
+            </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script type="module" src="/student_login_loginauth.js"></script>
+    
+    
+    </body>
+</html>
