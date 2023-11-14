@@ -14,10 +14,9 @@
 <div class="mt-1">
     <h1 class="header">ICCT ANTIPOLO</h1>
     <input class="inputbox" type="file" id="UploadFile" accept=".csv">
-    <input type="text" id="text"/>
     <button id="view_csv">VIEW</button>
     <button id="uploadcofirm">SAVE</button>
-    <input type="text" id="student_id"><button id="generate_btn">Generate code</button>
+    
 
     <table class="table Table-dark">
         <thead>
@@ -31,6 +30,7 @@
             <th>TIME</th>
             <th>COURSE CODE</th>
             <th>COURSE DESCRIPTION</th>
+            <th>EMAIL</th>
             <th>PRELIM GRADE</th>
             <th>MIDTERM GRADE</th>
             <th>FINAL GRADE</th>
@@ -47,7 +47,6 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
 <script type="module" src="/teacher_read_save_retrive_data.js"></script>
-<script type="module" src="/teacher_generate_code.js"></script>
 <script src="/teacher_viewdata.js"></script>
 </body>
 </html>
