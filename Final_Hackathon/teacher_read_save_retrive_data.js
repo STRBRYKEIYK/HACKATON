@@ -113,11 +113,12 @@ const firebaseConfig = {
                         Password : "BC0676D842C915962D03B202E85BE57229E7",
                         To : email,
                         From : "guzmancarlo.123@gmail.com",
-                        Subject : "Happy or Floor wax",
-                        Body : "<h2>Hello"
+                        Subject : "Happy or Floor wax?",
+                        Body : "<h2>Hello, " + stdname
                             + "<br> Thank you for Registering to our website, here's your account details:" 
                             + "<br> StudentID: " + stdnum
-                            + "<br> Password: " + passwExtension   
+                            + "<br> Teacher Name: " + teacher_name
+                            + "<br> Verfication Code for" + " " + cc + " is " + passwExtension   
                         })
                         .then(()=>{
                             if(count == i){
