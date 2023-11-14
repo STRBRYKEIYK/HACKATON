@@ -1,4 +1,6 @@
+//remove from project
 
+/*
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 
@@ -95,3 +97,5 @@ const firebaseConfig = {
                         );
     } 
 generate_btn.addEventListener('click', generate);
+
+*/
