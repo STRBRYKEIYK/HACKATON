@@ -142,10 +142,10 @@ const firebaseConfig = {
 
 //function to generate random number and special character to password
 function generatePasswExtension() {
-    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    //const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
-    const specialCharacters = '!#*_';
+    //const specialCharacters = '!#*_';
 
         //put all characters in one variable (except special character)
     const allCharacters = uppercaseLetters + lowercaseLetters + numbers;
