@@ -37,6 +37,25 @@ function handleMouseLeave() {
 }
 
 function handleFileDrop(event) {
+    Papa.parse(event.dataTransfer.files[0],
+    ({
+        download: true,
+          //ignore header
+          header: true,
+          //skip empty row
+          skipEmptyLines: true,
+          complete: function(results){
+            //read every file then insert it to a array
+            
+            for (let i=0; i<results.data.length;i++){
+                student.push(results.data[i]);
+                //call the function and pass the data of array
+                AddAllItemToTable(student);
+            }
+            
+        }
+
+    }));
     event.preventDefault();
     handleDragLeave();
     var files = event.dataTransfer.files;
