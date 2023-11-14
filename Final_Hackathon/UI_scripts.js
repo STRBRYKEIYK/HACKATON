@@ -1,5 +1,4 @@
 // script.js
-
 function handleFileSelect(files) {
     for (var i = 0, f; f = files[i]; i++) {
         if (f.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
@@ -9,6 +8,9 @@ function handleFileSelect(files) {
             document.getElementById('upload_status').style.display = 'flex';
             document.getElementById('drop_zone').classList.add('uploaded');
             document.getElementById('drop_zone').innerHTML = 'File Uploaded!';
+            
+            // Pass the file to viewSpreadsheet function
+            viewSpreadsheet(f);
         } else {
             alert('Please upload a valid spreadsheet or CSV file.');
         }
@@ -54,32 +56,31 @@ function uploadFile() {
     }, 1000);
 }
 
-function viewSpreadsheet() {
+function viewSpreadsheet(file) {
     // Make the modal visible
     document.getElementById('myModal').style.display = 'block';
 
-    // Example: Add some dummy data to the table
-    var dummyData = [
-        [1, 'ID001', 'John Doe', '2023', 'Trimester 1', 'Section A', 'Math', '85', '90', '92', 'Pass'],
-        [2, 'ID002', 'Jane Doe', '2023', 'Trimester 1', 'Section B', 'English', '78', '85', '88', 'Pass'],
-        // Add more rows as needed
-    ];
+    // Read the content of the CSV file
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var csvContent = e.target.result;
 
-    // Get the tbody element in the modal
-    var tbody = document.getElementById('tbody1');
+        // Parse CSV content and populate the table
+        var rows = csvContent.split('\n');
+        var tbody = document.getElementById('tbody1');
 
-    // Clear existing data in the table
-    tbody.innerHTML = '';
+        for (var i = 0; i < rows.length; i++) {
+            var row = tbody.insertRow(i);
+            var cells = rows[i].split(',');
 
-    // Populate the table with data
-    for (var i = 0; i < dummyData.length; i++) {
-        var row = tbody.insertRow(i);
-
-        for (var j = 0; j < dummyData[i].length; j++) {
-            var cell = row.insertCell(j);
-            cell.innerHTML = dummyData[i][j];
+            for (var j = 0; j < cells.length; j++) {
+                var cell = row.insertCell(j);
+                cell.innerHTML = cells[j];
+            }
         }
-    }
+    };
+
+    reader.readAsText(file);
 }
 
 function closeSpreadsheetModal() {
