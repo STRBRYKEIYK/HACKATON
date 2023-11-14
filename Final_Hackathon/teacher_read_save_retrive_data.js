@@ -20,10 +20,25 @@ const firebaseConfig = {
   from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
   const db = getFirestore();
-  let count = 0; 
 
-  var stdnum, stdname , academic, trimester , section, day , time, cc , cd, prelim , midterm, finals
-  , remark, cu,fn, en ;
+  //send verification via email
+  var Email = { send: function (a) { return new Promise(function (n, e) 
+    { a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send"; var t = JSON.stringify(a); Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, 
+    function (e) { n(e) }) }) }, ajaxPost: function (e, n, t) 
+    { var a = Email.createCORSRequest("POST", e); a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), 
+    a.onload = function () { var e = a.responseText; null != t && t(e) }, a.send(n) }, ajax: function (e, n) 
+    { var t = Email.createCORSRequest("GET", e); t.onload = function () { var e = t.responseText; null != n && n(e) }, t.send() }, createCORSRequest: 
+    function (e, n) { var t = new XMLHttpRequest; return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t } };
+
+    var teacher_id = localStorage.getItem('teacher_id');
+    var teacher_name = localStorage.getItem('teacher_name');
+
+    let count = 0; 
+
+    var stdnum, stdname , academic, trimester , section, day , time, cc , cd, prelim , midterm, finals
+    , remark, cu,fn, en, email ;
+
+    
 
     document.getElementById('uploadcofirm').addEventListener('click', ()=>{
     Papa.parse(document.getElementById('UploadFile').files[0],
@@ -49,6 +64,10 @@ const firebaseConfig = {
                      cu = results.data[i].CREDIT_UNITS;
                      fn = results.data[i].FACULTY_NAME;
                      en = results.data[i].ECR_NAME;
+                     email=results.data[i].EMAIL;
+                     
+                     
+                     
 
     
                             var ref = doc(db, "CLASS_RECORD", section, stdnum, cc + stdnum);
@@ -57,6 +76,7 @@ const firebaseConfig = {
                                     STUDENT_NUM : stdnum,
                                     STUDENT_NAME : stdname,
                                     ACADEMIC_YEAR : academic,
+                                    EMAIL_ADDRESS : email,
                                     TRIMESTER : trimester,
                                     SECTION : section,
                                     DAY : day,
@@ -72,129 +92,72 @@ const firebaseConfig = {
                                     }
                                     
                                 )
-                                .then(()=>{
-                                    if(count == i){
-                                    alert("Added Succesfully");
-                                }
-                                else{
-                                    count + 1;
-                                    
-                                }
-                                })
-                                .catch((error)=>{
-                                    alert("Added failed:"+error);
-                                });
+                                
+                generatePasswExtension();
+                var passwExtension = generatePasswExtension();
+
+                //Generate_verification_code                
+                var ref = doc(db, "GENERATE_CODE", passwExtension);
+                  setDoc(
+                    ref, {
+                        StudentID : stdnum,
+                        CourseCode : cc,
+                        TeacherName : teacher_name,
+                        TeacherID : teacher_id,
+                        StudentEmail : email
+                        }
+                    )
+                    Email.send({
+                        Host : "smtp.elasticemail.com",
+                        Username : "guzmancarlo.123@gmail.com",
+                        Password : "BC0676D842C915962D03B202E85BE57229E7",
+                        To : email,
+                        From : "guzmancarlo.123@gmail.com",
+                        Subject : "Happy or Floor wax",
+                        Body : "<h2>Hello"
+                            + "<br> Thank you for Registering to our website, here's your account details:" 
+                            + "<br> StudentID: " + stdnum
+                            + "<br> Password: " + passwExtension   
+                        })
+                        .then(()=>{
+                            if(count == i){
+                            alert("Added Succesfully");
+                        }
+                        else{
+                            count + 1;
+                            
+                        }
+                        })
+                        .catch((error)=>{
+                            alert("Added failed:"+error);
+                        });
                         
-                    
             }                   
         }
     });
 });
-/*
-                        function saveData(){
-                        var ref = doc(db, "CLASS_RECORD", stdnum , cc+stdnum, cc);
-                                setDoc(
-                                ref, {
-                                    STUDENT_NUM : stdnum,
-                                    STUDENT_NAME : stdname,
-                                    ACADEMIC_YEAR : academic,
-                                    TRIMESTER : trimester,
-                                    SECTION : section,
-                                    DAY : day,
-                                    TIME : time,
-                                    COURSE_CODE : cc,
-                                    COURSE_DESCRIPTION : cd,
-                                    PRELIM : prelim,
-                                    MIDTERM : midterm,
-                                    FINALS : finals,
-                                    REMARK : remark,
-                                    CREDIT_UNITS : cu,
-                                    FACULTY_NAME : fn,
-                                    ECR_NAME : en
-                                    }
-                                )
-                            }               
-/*
-    async function GetaDocument(){
-        var ref = doc(db, texxt.value, search.value);
-        const docsnap = await getDoc(ref);
-    
-        if(docsnap.exists()){
-            stid.value = docsnap.data().STUDENTID;
-            stname.value = docsnap.data().STUDENTNAME;
-            stcode.value = docsnap.data().STUDENTCODE;
-            stpr.value = docsnap.data().PRELIM;
-            stmd.value = docsnap.data().MIDTERM;
-            stfn.value = docsnap.data().FINALS;
-            
-        }
-        else{
-            alert("No Data");
-        }
+
+
+
+//function to generate random number and special character to password
+function generatePasswExtension() {
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    const specialCharacters = '!#*_';
+
+        //put all characters in one variable (except special character)
+    const allCharacters = uppercaseLetters + lowercaseLetters + numbers;
+    let passwordExt = '';
+
+    // Include at least one uppercase letter, one number, and one special character
+    passwordExt += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+    passwordExt += numbers[Math.floor(Math.random() * numbers.length)];
+    passwordExt += specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+
+    // Complete the rest of the password with random characters
+    for (let i = 1; i < 5; i++) {
+        passwordExt += allCharacters[Math.floor(Math.random() * allCharacters.length)];
     }
-
-Retrive.addEventListener("click", GetaDocument);
-
- /* var ref = doc(db, texxt.value, cc + stdnum, "SECOND_SUBJECT"  ,cc + stdnum, "THIRD_SUBJECT"  ,cc + stdnum, "FOURTH_SUBJECT"  ,cc + stdnum);
-
-                var ref = doc(db, "CLASS_RECORD", texxt.value);
-                setDoc(
-                ref, {
-                    STUDENT : student      
-                        }
-                    )
-                    .then(()=>{
-                        alert("Added Succesfully");
-                    })
-                    .catch((error)=>{
-                        alert("Added Succesfully:"+error);
-                    }); 
-
-
-
-results.data.map((csv, )=>{
-    student.push(csv);
-})
-
-  // Auto Generate ID
-  async function AddDocuments(){
-    var ref = collection(db, "TheStudentList");
-    const docRef = await addDoc(
-        ref, {
-            NameofStudent : "Emman",
-            StudentNumber : "20161589",
-            Course: "BSIT"
-        }
-    )
-    .then(()=>{
-        alert("Added Succesfully");
-    })
-    .catch((error)=>{
-        alert("Added Succesfully:"+error);
-    });
-
-  }
-
-  //button function
-  savebtn.addEventListener("click", AddDocuments);
-  
-
-
-async function GetaDocument(){
-    var ref = doc(db, "CLASS_RECORD", texxt.value);
-    const docsnap = await getDoc(ref);
-
-    if(docsnap.exists()){
-        retrive = docsnap.data().STUDENT;
-        console.log(retrive);
-        stname.value = retrive[search.value].studentname;
-        stid.value = retrive[search.value].studentid;
-        stcode.value = retrive[search.value].subcode;
-        stpr.value = retrive[search.value]?.prelim;
-        stmd.value = retrive[search.value]?.midterm;
-        stfn.value = retrive[search.value]?.finals;
+    return passwordExt;
     }
-    else{
-        alert("No Data");
-    }
-} */
