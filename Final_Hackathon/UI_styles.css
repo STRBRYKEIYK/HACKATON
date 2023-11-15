@@ -79,6 +79,25 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 1);
 }
 
+#save_btn {
+    display: none;
+    width: 20%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#save_btn:hover {
+    background-color: #c0392b;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+}
+
+
 #file_input {
     display: none;
 }
@@ -124,7 +143,7 @@ body {
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    overflow:scroll; /* Enable scroll if needed */
     background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
@@ -135,7 +154,7 @@ body {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
 }
 
 /* Close button style */
@@ -145,6 +164,7 @@ body {
     font-size: 28px;
     font-weight: bold;
 }
+
 
 .close:hover,
 .close:focus {
