@@ -1,4 +1,5 @@
 
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 
 const firebaseConfig = {
@@ -38,15 +39,8 @@ const firebaseConfig = {
     var stdnum, stdname , academic, trimester , section, day , time, cc , cd, prelim , midterm, finals
     , remark, cu,fn, en, email ;
 
+    document.getElementById('save_btn').addEventListener('click', ()=>{
     
-
-    document.getElementById('uploadcofirm').addEventListener('click', ()=>{
-    Papa.parse(document.getElementById('UploadFile').files[0],
-        {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: function(results){
                 for (let i=0; i<results.data.length;i++){
                      stdnum = results.data[i].STUDENT_NUM;
                      stdname = results.data[i].STUDENT_NAME;
@@ -66,9 +60,6 @@ const firebaseConfig = {
                      en = results.data[i].ECR_NAME;
                      email=results.data[i].EMAIL;
                      
-                     
-                     
-
     
                             var ref = doc(db, "CLASS_RECORD", section, stdnum, cc + stdnum);
                                 setDoc(
@@ -113,12 +104,23 @@ const firebaseConfig = {
                         Password : "BC0676D842C915962D03B202E85BE57229E7",
                         To : email,
                         From : "guzmancarlo.123@gmail.com",
-                        Subject : "Happy or Floor wax?",
-                        Body : "<h2>Hello, " + stdname
-                            + "<br> Thank you for Registering to our website, here's your account details:" 
-                            + "<br> StudentID: " + stdnum
+                        Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
+                        Body : "<h2>Dear, " + stdname
+                            + "<br> <h2>Welcome</h2><p>to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at</p> ICCT COLLEGE!" 
+                            + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+                            + "<br>"
+                            + "<br> Registration Details: " 
+                            + "<br>"
+                            + "<br> Student ID: " + stdnum
                             + "<br> Teacher Name: " + teacher_name
-                            + "<br> Verfication Code for" + " " + cc + " is " + passwExtension   
+                            + "<br> Course Enrolled: " + cc
+                            + "<br> Verfication Code " + passwExtension   
+                            + "<br>"
+                            + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, you'll have quick access to your grades and valuable insights into your academic progress. "
+                            + "<br>"
+                            + "<br> Best regards,"
+                            + "<br>"
+                            + "<br> eCR-GradeCSync (eGCS) Team"
                         })
                         .then(()=>{
                             if(count == i){
@@ -133,19 +135,18 @@ const firebaseConfig = {
                             alert("Added failed:"+error);
                         });
                         
-            }                   
-        }
-    });
+            }              
+    
 });
 
 
 
 //function to generate random number and special character to password
 function generatePasswExtension() {
-    //const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    //const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
-    //const specialCharacters = '!#*_';
+    const specialCharacters = '!#*_';
 
         //put all characters in one variable (except special character)
     const allCharacters = uppercaseLetters + lowercaseLetters + numbers;
