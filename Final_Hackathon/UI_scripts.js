@@ -3,6 +3,9 @@
 var student=[];
 var stdno = 0;
 var tbody = document.getElementById('tbody1');
+var results; 
+
+
 
 function handleFileSelect(files) {
     for (var i = 0, f; f = files[i]; i++) {
@@ -36,6 +39,9 @@ function handleMouseLeave() {
     document.getElementById('drop_zone').style.opacity = 0.8;
 }
 
+//connection
+
+
 function handleFileDrop(event) {
     Papa.parse(event.dataTransfer.files[0],
     ({
@@ -44,8 +50,9 @@ function handleFileDrop(event) {
           header: true,
           //skip empty row
           skipEmptyLines: true,
-          complete: function(results){
+          complete: function(result){
             //read every file then insert it to a array
+            result = result;
             
             for (let i=0; i<results.data.length;i++){
                 student.push(results.data[i]);
@@ -71,8 +78,9 @@ function uploadFile() {
           header: true,
           //skip empty row
           skipEmptyLines: true,
-          complete: function(results){
+          complete: function(result){
             //read every file then insert it to a array
+            results = result;
             
             for (let i=0; i<results.data.length;i++){
                 student.push(results.data[i]);
@@ -101,17 +109,20 @@ function uploadFile() {
 function viewSpreadsheet() {
     // Make the modal visible
     document.getElementById('myModal').style.display = 'block';
+    file_input = document.getElementById('file_input');
 }
 
 function closeSpreadsheetModal() {
     // Hide the modal
     document.getElementById('myModal').style.display = 'none';
+    document.getElementById('save_btn').style.display = 'block';
 }
 
 function logout() {
     alert('Logging out...');
     // Logout then link to the Login Area
 }
+
 
 function AddItemToTable(STUDENT_NUM,STUDENT_NAME,ACADEMIC_YEAR,TRIMESTER,SECTION,DAY,TIME,COURSE_CODE,COURSE_DESCRIPTION,EMAIL,PRELIM_GRADE,MIDTERM_GRADE,
     FINAL_GRADE,REMARK,CREDIT_UNITS,FACULTY_NAME,ECR_NAME){
