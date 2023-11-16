@@ -79,20 +79,45 @@ const firebaseConfig = {
   var f_n6 = document.getElementById("f_n6");
   var cu6 = document.getElementById("cu6");
 
-  
+  var data1;
+  var data2;
+  var data3;
+  var data4;
+  var data5;
+  var data6;
   
 
   const db = getFirestore();
 
+  var selectedVariable ="1st";
+  selectedVariable = variableSelect.value;
+  
+
+
+
 //checking if there is an error in the program
-var btn = document.getElementById('view_csv');
 
   try
   {
 
+    async function LoadDataAdvance(){
+      var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",localStorage.getItem('student_id'),selectedVariable);
+      const docsnap = await getDoc(ref);
+      if(docsnap.exists()){  
+      //assigning value from firestore to table data
+      data1 = docsnap.data().subOne;
+      data2 = docsnap.data().subTwo;
+      data3 = docsnap.data().subThree;
+      data4 = docsnap.data().subFour;
+      data5 = docsnap.data().subFive;
+      data6 = docsnap.data().subSix;  
+      
+    }
+  }
+
   //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
     async function subject01(){
-        var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub1') + localStorage.getItem('student_id'));
+        var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data1 + selectedVariable,selectedVariable);
         const docsnap = await getDoc(ref);
 
         if(docsnap.exists()){
@@ -107,9 +132,27 @@ var btn = document.getElementById('view_csv');
           cu1.innerHTML=docsnap.data().CREDIT_UNITS; 
           }
       }
+
+      //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject02(){
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data2+selectedVariable,selectedVariable);
+      const docsnap = await getDoc(ref);
+      if(docsnap.exists()){  
+      //assigning value from firestore to table data
+      sub4.innerHTML = docsnap.data().COURSE_CODE;
+      cd4.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+      pr4.innerHTML = docsnap.data().PRELIM;
+      md4.innerHTML=docsnap.data().MIDTERM;
+      fn4.innerHTML = docsnap.data().FINALS;
+      section4.innerHTML=docsnap.data().SECTION;
+      f_n4.innerHTML = docsnap.data().FACULTY_NAME;
+      cu4.innerHTML=docsnap.data().CREDIT_UNITS;
+        }
+    }
+
     //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
       async function subject03(){
-        var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub2') + localStorage.getItem('student_id'));
+        var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data3+selectedVariable,selectedVariable);
         const docsnap = await getDoc(ref);
         if(docsnap.exists()){  
         //assigning value from firestore to table data
@@ -126,7 +169,7 @@ var btn = document.getElementById('view_csv');
 
       //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
     async function subject04(){
-      var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub3') + localStorage.getItem('student_id'));
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data4+selectedVariable,selectedVariable);
       const docsnap = await getDoc(ref);
 
       if(docsnap.exists()){
@@ -141,26 +184,11 @@ var btn = document.getElementById('view_csv');
         cu3.innerHTML =docsnap.data().CREDIT_UNITS; 
         }
     }
-  //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
-    async function subject02(){
-      var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub4') + localStorage.getItem('student_id'));
-      const docsnap = await getDoc(ref);
-      if(docsnap.exists()){  
-      //assigning value from firestore to table data
-      sub4.innerHTML = docsnap.data().COURSE_CODE;
-      cd4.innerHTML=docsnap.data().COURSE_DESCRIPTION;
-      pr4.innerHTML = docsnap.data().PRELIM;
-      md4.innerHTML=docsnap.data().MIDTERM;
-      fn4.innerHTML = docsnap.data().FINALS;
-      section4.innerHTML=docsnap.data().SECTION;
-      f_n4.innerHTML = docsnap.data().FACULTY_NAME;
-      cu4.innerHTML=docsnap.data().CREDIT_UNITS;
-        }
-    }
+  
 
     //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
     async function subject05(){
-      var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub5') + localStorage.getItem('student_id'));
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data5 + selectedVariable,selectedVariable);
       const docsnap = await getDoc(ref);
 
       if(docsnap.exists()){
@@ -177,7 +205,7 @@ var btn = document.getElementById('view_csv');
     }
   //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
     async function subject06(){
-      var ref = doc(db, "CLASS_RECORD", localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub6') + localStorage.getItem('student_id'));
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data6 + selectedVariable,selectedVariable);
       const docsnap = await getDoc(ref);
       if(docsnap.exists()){  
       //assigning value from firestore to table data
@@ -189,30 +217,43 @@ var btn = document.getElementById('view_csv');
       section6.innerHTML=docsnap.data().SECTION;
       f_n6.innerHTML = docsnap.data().FACULTY_NAME;
       cu6.innerHTML=docsnap.data().CREDIT_UNITS;
-        }else{
-          alert('no data');
-          console.log(localStorage.getItem('section'), localStorage.getItem('student_id') , localStorage.getItem('sub6') + localStorage.getItem('student_id'));
         }
     }
+   //load data every seconds   
+    setInterval(function() {
+      subject01();
+      subject02();
+      subject03();
+      subject04();
+      subject05();
+      subject06();
+    }, 10);
     
-      
-      
       
    
     
       //autoload the function without human interference
-        window.onload=function(){
-        //calling function
+       window.onload=function(){
+       selectedVariable = variableSelect.value;
+       LoadDataAdvance();  
+      }
+       
+        //calling function on change option button
+        variableSelect.addEventListener('change', function() {
+          selectedVariable = variableSelect.value;
+          LoadDataAdvance();
           subject01();
           subject02();
           subject03();
           subject04();
           subject05();
           subject06();
-        }
+          
+        });
+        
         
       }
       catch(Error){
         console.log(Error);
       }
-       
+      
