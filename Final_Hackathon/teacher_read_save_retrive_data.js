@@ -1,5 +1,3 @@
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 
 const firebaseConfig = {
@@ -61,7 +59,7 @@ const firebaseConfig = {
                      email=results.data[i].EMAIL;
                      
     
-                            var ref = doc(db, "CLASS_RECORD", section, stdnum, cc + stdnum);
+                            var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
                                 setDoc(
                                 ref, {
                                     STUDENT_NUM : stdnum,
@@ -95,6 +93,7 @@ const firebaseConfig = {
                         CourseCode : cc,
                         TeacherName : teacher_name,
                         TeacherID : teacher_id,
+                        sem : trimester,
                         StudentEmail : email
                         }
                     )
