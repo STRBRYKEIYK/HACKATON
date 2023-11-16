@@ -28,6 +28,7 @@ const firebaseConfig = {
   var cc6;
   var fn;
   var fnid;
+  var tri;
 
   var sub1_btn = document.getElementById('sub1_btn');
   let sub2_btn = document.getElementById('sub2_btn');
@@ -61,6 +62,7 @@ async function sub1_verified(){
         var student_id = docsnap.data().StudentID;
         if(student_id == studID.value){
         cc1 = docsnap.data().CourseCode;
+        tri = docsnap.data().sem;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
         sub1.value = cc1 + " - " + " Teacher name: " + fn + " Teacher Number: " + fnid;
@@ -124,6 +126,7 @@ async function sub4_verified(){
         var student_id = docsnap.data().StudentID;
         if(student_id == studID.value){
         cc4 = docsnap.data().CourseCode;
+        tri = docsnap.data().sem;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
         sub4.value = cc4 + " - " + " Teacher name: " + fn + " Teacher Number: " + fnid;
@@ -182,14 +185,13 @@ else{
     }
 }
 function SaveRegistrationFrom(){
-        var ref = doc(db, "STUDENT_LIST",studID.value);
+        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
             setDoc( 
             ref, {
             studentID : studID.value,
             name : fName.value + " " + mI.value +" "+ lName.value,
-            email : email.value,
-            section : section.value,
             password : password.value,
+            trimester : tri,
             subOne : cc1,
             subTwo : cc2,
             subThree : cc3,
@@ -209,45 +211,3 @@ sub4_btn.addEventListener('click',sub4_verified);
 sub5_btn.addEventListener('click',sub5_verified);
 sub6_btn.addEventListener('click',sub6_verified);
 register_button.addEventListener('click',SaveRegistrationFrom);
-
-
-
-
-/*
-register_button.addEventListener('click', async () => {
-
-    let studID = document.getElementById('student-id').value
-    let fName = document.getElementById('first-name').value
-    let mI = document.getElementById('middle-initial').value
-    let lName = document.getElementById('last-name').value
-    let email = document.getElementById('email').value
-    let section = document.getElementById('section').value
-    let password = document.getElementById('password').value
-
-    let sub1 = document.getElementById('sub1').value
-    let sub2 = document.getElementById('sub2').value
-    let sub3 = document.getElementById('sub3').value
-    let sub4 = document.getElementById('sub4').value
-    let sub5 = document.getElementById('sub5').value
-    let sub6 = document.getElementById('sub6').value
-
-    try {
-        await setDoc(doc(db, "STUDENT_LIST", studID), {
-            studentID : studID,
-            name : fName + " " + mI +" "+ lName,
-            email : email,
-            section : section,
-            password : password,
-            sub1 : sub1,
-            sub2 : sub2,
-            sub3 : sub3,
-            sub4 : sub4,
-            sub5 : sub5,
-            sub6 : sub6
-        })
-        alert('SUCCESS')
-    } catch (error) {
-        console.error(error)
-    }
-});
-*/
