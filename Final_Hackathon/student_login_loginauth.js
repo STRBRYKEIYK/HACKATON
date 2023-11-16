@@ -32,7 +32,7 @@ const firebaseConfig = {
 
   //checking the the data from firestore
   async function GetaDocument(){
-    var ref = doc(db, "STUDENT_LIST", uname.value);
+    var ref = doc(db, "STUDENT_LIST","STUDENT_DATA", uname.value, "1st");
     const docsnap = await getDoc(ref);
   //if the value is true then assign the collect data ('password') to a variable pass
     if(docsnap.exists()){
@@ -40,23 +40,9 @@ const firebaseConfig = {
   //if the value from the variable pass is equal to the value of upass that the user input/    
         if(pass == upass.value){
           //assigning data from firestore to variable
-          var section = docsnap.data().section;
           var student_id = docsnap.data().studentID;
-          var subject1 = docsnap.data().subOne;
-          var subject2 = docsnap.data().subTwo;
-          var subject3 = docsnap.data().subThree;
-          var subject4 = docsnap.data().subFour;
-          var subject5 = docsnap.data().subFive;
-          var subject6 = docsnap.data().subSix;
           //make it global to be able to access in different js file.
-          localStorage.setItem('section', section);
           localStorage.setItem('student_id', student_id);
-          localStorage.setItem('sub1', subject1);
-          localStorage.setItem('sub2', subject2);
-          localStorage.setItem('sub3', subject3);
-          localStorage.setItem('sub4', subject4);
-          localStorage.setItem('sub5', subject5);
-          localStorage.setItem('sub6', subject6);
           //opening the student_UI
          window.location="student_ui.html"
       
