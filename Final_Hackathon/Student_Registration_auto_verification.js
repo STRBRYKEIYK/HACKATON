@@ -185,7 +185,8 @@ else{
     }
 }
 function SaveRegistrationFrom(){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+        try {
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
             setDoc( 
             ref, {
             studentID : studID.value,
@@ -198,10 +199,14 @@ function SaveRegistrationFrom(){
             subFour : cc4,
             subFive : cc5,
             subSix : cc6
-        })
-        alert('SUCCESS');
+            })
+            alert('SUCCESS');
         
+        
+        } catch (error) {
+            alert(error)
         }
+    }
 
 
 sub1_btn.addEventListener('click',sub1_verified);
