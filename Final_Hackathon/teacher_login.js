@@ -46,8 +46,8 @@ const firebaseConfig = {
           localStorage.setItem('teacher_name', teacher_name);
           localStorage.setItem('teacher_id', teacher_id);
           
-          //opening the student_UI
-          window.location="Teacher.html";
+          //opening the teacher_UI
+          window.location="new Teacher UI.html";
       
         }
         

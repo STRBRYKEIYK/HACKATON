@@ -121,6 +121,7 @@ function closeSpreadsheetModal() {
 function logout() {
     alert('Logging out...');
     // Logout then link to the Login Area
+    window.location.href = 'teacher_login.html';
 }
 
 
@@ -200,3 +201,5 @@ function AddItemToTable(STUDENT_NUM,STUDENT_NAME,ACADEMIC_YEAR,TRIMESTER,SECTION
         element.REMARK,element.CREDIT_UNITS,element.FACULTY_NAME,element.ECR_NAME);
     });
   }
+
+  

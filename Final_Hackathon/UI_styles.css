@@ -93,7 +93,7 @@ body {
 }
 
 #save_btn:hover {
-    background-color: #c0392b;
+    background-color: rgb(160, 29, 15);
     box-shadow: 0 0 20px rgba(255, 255, 255, 1);
 }
 
