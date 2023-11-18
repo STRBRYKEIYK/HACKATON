@@ -1,91 +1,67 @@
-body {
-    background: #0051ffbe;
-    font-family: 'Exo', sans-serif;
-    height: auto;
+@import url(./css/general.css);
 
+.register-container {
+    display: flex;
+    gap: var(--sm);
 }
 
-.container {
-    display:flex;
-    justify-content:center;
-    align-items: center; 
-    height: 100vh; 
-
+.register-container>div {
+    flex: 1;
 }
 
-.signup-box {
-    
-    background-color: #ffffff;
-    padding: 20px 50px 40px 50px;
-    text-align: center;
-    border-radius: 20px;
-    box-shadow: #2022259f insets;
-    margin-bottom: 25px;
-    max-width: 2000px ;
+.personal-data {
+    padding: var(--sm) 0;
 }
 
-#personal {
-    float: left;
+.subjects {
+    padding: var(--sm) var(--sm) 0;
+    border-radius: var(--brd-radius);
+    background-color: var(--clr-slate-100);
 }
 
-#subjects {
-    float: right;
+.subject-inputs {
+    display: flex;
+    gap: var(--xs);
 }
 
-#personal, #subjects {
-   margin: 20px;
-}
-
-label {
-
-    float: left;
-    margin-left: 70px;
-}
-
-input {
-    outline: none;
-    font-size: 15px;
-}
-
-.input-boxes {
-    border: 1px;
-    border-radius: 20px;
-    background-color: #f0f0f0;
-    width: 500px;
-    padding: 7px;
-    margin-bottom: 10px;
-}
-
-.input-boxes-half {
-    border: 1px;
-    border-radius: 20px;
-    background-color: #f0f0f0;
-    width: 225px;
-    padding: 7px;
-    margin-bottom: 25px;
-}
-
-#middle-initial {
-    width: 50px;
-}
-
-#select-campus {
-    width: 500px;
-    height: auto;
-    border-radius: 20px;
-    background-color: #f0f0f0;
-    margin-bottom: 20px;
-}
-
-#register_button {
-    background-color: rgb(12, 0, 125);
-    color: white;
-    font-family: Impact;
-    font-size: 30px;
-    padding: 5px;
-    height: 50px;
-    width: 70%;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 10px;
+.verify-buttons {
+    box-shadow: inset 0 0 0 2px var(--clr-primary);
+    border-radius: var(--brd-radius);
+    border: none;
     cursor: pointer;
+    transition: background-color .2s, color .1s;
+
+    background: none;
+    width: 45px;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+}
+
+.verify-buttons:hover {
+    background-color: var(--clr-primary);
+}
+
+.verify-buttons>svg {
+    fill: var(--clr-secondary);
+}
+
+.verify-buttons:hover>svg {
+    fill: hsl(1, 0%, 98%);
+}
+
+/* md */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+        gap: var(--lg);
+    }
+
+    .register-container>div {
+        padding: 0;
+    }
+
+    .subjects {
+        background-color: none;
+    }
 }
