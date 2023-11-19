@@ -6,84 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECR-GradeSync (eGS)</title>
     <link rel="stylesheet" type="text/css" href="UI_styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="./css/general.css">
 </head>
 
 
 <body>
-    <div id="navbar">
-        <!-- <img id="logo" src="icct_logo.png" alt="ICCT Logo"> -->
-        <H3>eCR-GradeCSync (eGCS) v1.0</H3>
+    <header>
+        <nav class="container navigation-bar">
+            <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
+            <button class="btn-logout" id="">Log out</button>
+        </nav>
+    </header>
+
+    <main class="place-center">
+        <section class="container drop-zone-container">
+            <div class="drop-zone mb-md" id="drop-zone">
+                <!-- Click or Drag Spreadsheet Here -->
+                <input class="file-input" type="file" id="file-input" accept=".csv">
+            </div>
+            <div class="drop-zone_buttons">
+                <button class="btn-ghost full mb-xs" id="btn-open-modal">View
+                    Spreadsheet</button>
+                <button class="btn-solid full" id="save_btn">Submit</button>
+            </div>
+        </section>
+    </main>
 
 
+    <section class="modal" id="modal">
+        <button id="btn-close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+        </button>
+    </section>
 
-        <a id="logout" onclick="logout()">Log Out</a>
-    </div>
-
-    <!--Welcome user after login-->
-    <h6 id="welcomeMessage"></h6>
-
-    <div id="drop_zone" onclick="document.getElementById('file_input').click();" onmouseenter="handleMouseEnter();"
-        onmouseleave="handleMouseLeave();" ondragover="handleDragOver(event);" ondragleave="handleDragLeave();"
-        ondrop="handleFileDrop(event);">
-        Click or Drag Spreadsheet Here
-        <input type="file" id="file_input" style="display: none;" accept=".csv" onchange="uploadFile()">
-
-    </div>
-
-    <button id="view_button" onclick="viewSpreadsheet()">View Spreadsheet</button>
-
-    <button id="save_btn">Submit</button>
-
-    <div id="upload_status">
-        <p style="color: #fff; font-weight: bold;">Spreadsheet has been uploaded!</p>
-
-    </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeSpreadsheetModal()">&times;</span>
-
-            <table class="table table-dark">
-
-                <thead>
-                    <th>#</th>
-                    <th>ID</th>
-                    <th>NAME</th>
-                    <th>ACADEMIC YEAR</th>
-                    <th>TRIMESTER</th>
-                    <th>SECTION</th>
-                    <th>DAY</th>
-                    <th>TIME</th>
-                    <th>COURSE CODE</th>
-                    <th>COURSE DESCRIPTION</th>
-                    <th>EMAIL</th>
-                    <th>PRELIM GRADE</th>
-                    <th>MIDTERM GRADE</th>
-                    <th>FINAL GRADE</th>
-                    <th>REMARK</th>
-                    <th>CREDIT UNITS</th>
-                    <th>FACULTY NAME</th>
-                    <th>ECR NAME</th>
-                </thead>
-                <tbody id="tbody1"></tbody>
+    <template id="template-table">
+        <section class="table-container container">
+            <table>
+                <tr id="thead"></tr>
+                <tr id="tbody"></tr>
             </table>
-        </div>
-    </div>
+        </section>
+    </template>
 
 
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script> -->
     <!-- <<<<<<< HEAD  -->
-    <script type="module" src="Teacher_read_save_retrive_data.js">
-    </script>
+    <!-- <script type="module" src="Teacher_read_save_retrive_data.js"></script> -->
     <!-- ======= -->
-    <script type="module" src="/Teacher_Workplace_read_save_retrive_data.js"></script>
+    <!-- <script type="module" src="/Teacher_Workplace_read_save_retrive_data.js"></script> -->
     <!-- >>>>>>> 98591da4bbf13efe577e5227ae334fc3186977ff -->
     <script src="UI_scripts.js"></script>
 
