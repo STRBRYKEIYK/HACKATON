@@ -1,51 +1,63 @@
-const tableHeadings = [];
 
 // Handle file submission
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', (event) => {
     const selectedFile = event.target.files[0];
+    const dropzoneBtn = document.getElementById('dropzone')
+    let fileName = selectedFile.name;
+    const maxCharacter = 16;
+    if(fileName.length >= maxCharacter) {
+        fileName = fileName.substring(0, maxCharacter) + "...";
+    }
+    dropzoneBtn.textContent = fileName;
+    submitButton.disabled = false
 
     Papa.parse(selectedFile, {
+        skipEmptyLines: true, 
         complete: function (results) {
-            tableHeadings.push(results.data[0]);
-            renderTable(tableHeadings);
+            displayTable(results.data)
         }
     });
 });
 
-// Handle modal toggle
-const modal = document.getElementById('modal');
-document.getElementById('btn-open-modal').addEventListener('click', () => modal.classList.add('active'));
-document.getElementById('btn-close-modal').addEventListener('click', () => modal.classList.remove('active'));
+const tableContainer = document.querySelector('.table-sub-container');
+function displayTable(data) {
+    // Create table
+    const table = document.createElement('table');
 
-// Handle table rendering
-function renderTable(headingData) {
-    const templateTable = document.getElementById('template-table');
-    const templateTableContent = document.importNode(templateTable.content, true);
-    const tableContainer = templateTableContent.querySelector('.table-container');
-    const table = templateTableContent.querySelector('table');
-    const thead = templateTableContent.querySelector('#thead');
-    const tbody = templateTableContent.querySelector('#tbody');
-
-    // Clear existing content
-    thead.innerHTML = '';
-
-    // Create table headers
-    for (let i = 0; i < headingData.length; i++) {
+    // Create header row
+    const headerRow = table.insertRow(0);
+    for (const header of data[0]) {
         const th = document.createElement('th');
-        th.textContent = headingData[i];
-        thead.appendChild(th);
+        th.textContent = header;
+        headerRow.appendChild(th);
     }
 
-    // Append the table to the modal
-    modal.appendChild(tableContainer);
+    // Create data rows
+    for (let i = 1; i < data.length; i++) {
+        const rowData = data[i];
+        const row = table.insertRow(i);
+
+        for (const value of rowData) {
+            const cell = row.insertCell();
+            cell.textContent = value;
+        }
+    }
+
+    tableContainer.innerHTML = '';
+    tableContainer.appendChild(table);
 }
+
+const submitButton = document.getElementById('submit-button');
+submitButton.addEventListener('click', ()=> {
+    // All functions for saving in database goes here... 
+    console.log("saved to database")
+})
 
 // Adjust 'main' padding dynamically
 function adjustPaddingTop() {
     const headerHeight = document.querySelector('header').offsetHeight;
     document.querySelector('main').style.paddingTop = `${headerHeight}px`;
-    modal.style.top = `${headerHeight + 10}px`;
 }
 adjustPaddingTop();
 window.addEventListener('resize', adjustPaddingTop);

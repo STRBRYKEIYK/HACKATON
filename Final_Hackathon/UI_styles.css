@@ -2,11 +2,12 @@
 
 /* Header */
 header {
-    box-shadow: var(--bx-shadow);
-    width: 100%;
-    position: fixed;
-    z-index: 999999;
     background-color: var(--clr-slate-50);
+    box-shadow: var(--bx-shadow);
+    z-index: 999999;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .navigation-bar {
@@ -42,77 +43,57 @@ header {
     color: hsl(1, 0%, 98%);
 }
 
-/* Main */
-main {
-    position: relative;
+.secondary-nav {
+    background-color: var(--clr-slate-100);
+    display: flex;
+    gap: var(--sm);
+    align-items: center;
+    padding: var(--sm);
 }
 
-/* Dropzone */
-.drop-zone {
-    outline: 1px dashed var(--clr-primary);
-    border-radius: var(--brd-radius);
-    padding: 15px;
-    max-width: 300px;
-    height: 80px;
-    margin: 0 auto;
+.input-file-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
 
-    color: var(--clr-secondary);
-    text-align: center;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.input-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 100px;
+    opacity: 0;
     cursor: pointer;
 }
-
-#drop-zone.uploaded {
-    background-color: var(--clr-secondary);
-    color: hsl(1, 0%, 98%);
-}
-
-/* .file-input {
-    display: none;
-} */
-
-.drop-zone:hover {
+.dropzone {
     background-color: var(--clr-slate-100);
+    padding: .5rem;
+    border: 1px dashed var(--clr-primary);
+    border-radius: var(--brd-radius);
+    color: var(--clr-secondary);
+    min-width: 150px;
 }
-
-.drop-zone_buttons {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-/* Modals */
-.modal {
-    /* background-color: var(--clr-slate-100); */
-    backdrop-filter: blur(5px);
-    position: absolute;
-    left: 0;
-
-    width: 100%;
-    height: 75vh;
-    display: none;
-}
-
-.modal>button {
-    position: absolute;
-    right: var(--md);
-}
-
-.modal.active {
-    display: block;
-}
+/* Main */
 
 /* Tables */
 .table-container {
-    box-shadow: var(--bx-shadow);
-    border-radius: var(--brd-radius);
-    overflow-x: auto;
-    margin-top: 50px;
+    overflow-x: hidden;
 }
-
+.table-sub-container {
+    overflow-x: auto; 
+}
+/* Scroll bars */
+.table-sub-container::-webkit-scrollbar {
+    height: 10px;
+}
+.table-sub-container::-webkit-scrollbar-track {
+    background-color: var(--clr-secondary);
+    border-radius: var(--brd-radius);
+}
+.table-sub-container::-webkit-scrollbar-thumb {
+    border-radius: var(--brd-radius);
+    background-color: var(--clr-primary);
+}
 /* xs */
 @media (max-width: 475px) {
     .system-name {

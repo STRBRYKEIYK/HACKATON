@@ -14,54 +14,30 @@
     <header>
         <nav class="container navigation-bar">
             <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
-            <button class="btn-logout" id="">Log out</button>
+            <button class="btn-logout" id="btn-logout">Log out</button>
         </nav>
-    </header>
-
-    <main class="place-center">
-        <section class="container drop-zone-container">
-            <div class="drop-zone mb-md" id="drop-zone">
-                <!-- Click or Drag Spreadsheet Here -->
-                <input class="file-input" type="file" id="file-input" accept=".csv">
+        <section class="container secondary-nav">
+            <div class="input-file-container">
+                <button class="dropzone" id="dropzone">Drag your file here!</button>
+                <input type="file" id="file-input" accept=".csv" class="input-file">
             </div>
-            <div class="drop-zone_buttons">
-                <button class="btn-ghost full mb-xs" id="btn-open-modal">View
-                    Spreadsheet</button>
-                <button class="btn-solid full" id="save_btn">Submit</button>
+            <button disabled="disabled" id="submit-button">Submit</button>
+        </section>
+    </header>
+    
+    <!--  -->
+    <main>
+        <section class="container table-container">
+            <div class="table-sub-container">
+                
             </div>
         </section>
     </main>
 
-
-    <section class="modal" id="modal">
-        <button id="btn-close-modal">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                <path
-                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-            </svg>
-        </button>
-    </section>
-
-    <template id="template-table">
-        <section class="table-container container">
-            <table>
-                <tr id="thead"></tr>
-                <tr id="tbody"></tr>
-            </table>
-        </section>
-    </template>
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script> -->
-    <!-- <<<<<<< HEAD  -->
     <!-- <script type="module" src="Teacher_read_save_retrive_data.js"></script> -->
-    <!-- ======= -->
     <!-- <script type="module" src="/Teacher_Workplace_read_save_retrive_data.js"></script> -->
-    <!-- >>>>>>> 98591da4bbf13efe577e5227ae334fc3186977ff -->
     <script src="UI_scripts.js"></script>
 
 
