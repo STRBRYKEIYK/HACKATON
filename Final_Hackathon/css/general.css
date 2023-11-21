@@ -46,7 +46,10 @@ h6 {
 /* Variables */
 :root {
     --clr-primary: #7f7fd5;
+    --clr-primary: #002060;
     --clr-secondary: #86a8e7;
+    --clr-primary-95: #ebebf9;
+    --clr-secondary-95: #eaf0fb;
     --clr-gradient: linear-gradient(110deg, var(--clr-primary), var(--clr-secondary));
     --clr-slate-50: #f8fafc;
     --clr-slate-100: #f1f5f9;
@@ -193,24 +196,22 @@ tr:hover {
 }
 
 th {
-    background-color: var(--clr-secondary);
-    font-family: 'Poppins', sans-serif;
-    color: var(--clr-slate-700);
-    white-space: nowrap;
-    border: 1px solid var(--clr-slate-200);
+    background-color: var(--clr-secondary-95);
 }
 
 td {
     font-family: 'Roboto', sans-serif;
-    color: var(--clr-slate-700);
-    white-space: nowrap;
-    border: 1px solid var(--clr-slate-200);
 }
 
 td,
 th {
+    border: 1px solid var(--clr-slate-200);
+    font-family: var(--fnt-primary);
+    color: var(--clr-slate-700);
+    white-space: nowrap;
     text-align: left;
-    padding: 8px;
+    padding: var(--xs);
+    font-size: 0.8rem;
 }
 
 

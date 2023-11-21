@@ -1,19 +1,19 @@
 
 // Handle file submission
-const fileInput = document.getElementById('file-input');
+const fileInput = document.getElementById('input-file');
 fileInput.addEventListener('change', (event) => {
     const selectedFile = event.target.files[0];
-    const dropzoneBtn = document.getElementById('dropzone')
+    const dropzoneBtn = document.querySelector('.input-label');
     let fileName = selectedFile.name;
     const maxCharacter = 16;
-    if(fileName.length >= maxCharacter) {
+    if (fileName.length >= maxCharacter) {
         fileName = fileName.substring(0, maxCharacter) + "...";
     }
     dropzoneBtn.textContent = fileName;
     submitButton.disabled = false
 
     Papa.parse(selectedFile, {
-        skipEmptyLines: true, 
+        skipEmptyLines: true,
         complete: function (results) {
             displayTable(results.data)
         }
@@ -44,16 +44,21 @@ function displayTable(data) {
         }
     }
 
-    tableContainer.innerHTML = '';
+    clearTable();
     tableContainer.appendChild(table);
 }
 
 const submitButton = document.getElementById('submit-button');
-submitButton.addEventListener('click', ()=> {
-    // All functions for saving in database goes here... 
+submitButton.addEventListener('click', () => {
+    fileInput.value = null;
+    clearTable();
+
+    // All functions for saving in database goes here...
     console.log("saved to database")
 })
-
+function clearTable() {
+    tableContainer.innerHTML = '';
+}
 // Adjust 'main' padding dynamically
 function adjustPaddingTop() {
     const headerHeight = document.querySelector('header').offsetHeight;

@@ -13,23 +13,30 @@
 <body>
     <header>
         <nav class="container navigation-bar">
-            <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
-            <button class="btn-logout" id="btn-logout">Log out</button>
+
+            <section class="primary-nav">
+                <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
+                <button class="btn-logout" id="btn-logout">Log out</button>
+            </section>
+
+            <section class="secondary-nav">
+                <div class="input-file-container">
+                    <label for="input-file" class="input-label">
+                        Drag your files here...
+                    </label>
+                    <button class="submit-button" disabled="disabled" id="submit-button">Submit</button>
+                    <input id="input-file" type="file" />
+                </div>
+            </section>
+
         </nav>
-        <section class="container secondary-nav">
-            <div class="input-file-container">
-                <button class="dropzone" id="dropzone">Drag your file here!</button>
-                <input type="file" id="file-input" accept=".csv" class="input-file">
-            </div>
-            <button disabled="disabled" id="submit-button">Submit</button>
-        </section>
     </header>
-    
+
     <!--  -->
     <main>
         <section class="container table-container">
             <div class="table-sub-container">
-                
+
             </div>
         </section>
     </main>
