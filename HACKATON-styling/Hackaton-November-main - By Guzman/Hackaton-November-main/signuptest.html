@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>SIGNUP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/register.css" />
+    <style>
+        .message {
+            display: flex;
+            color: black;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Register</h1>
+                <div id="personal">
+                    <br>
+                    <label for="student-id">StudentID:</label>
+                    <br>
+                    <input class="input-boxes" type="text" id="student-id" placeholder="Enter StudentID">
+                    <br>
+    
+                    <label for="first-name">Name:</label>
+                    <br>
+                    <input class="input-boxes-half" type="text" id="first-name" placeholder="First Name">
+                    <input class="input-boxes-half" type="text" id="middle-initial" placeholder="M.I.">
+                    <input class="input-boxes-half" type="text" id="last-name" placeholder="Last Name">
+                    <br>
+                    <!--  
+                    <label for="select-campus">Campus:</label>
+                    <br>   
+                               
+                    <select id="select-campus" class="input-boxes-half">
+                        <option value="Please Select Campus">-- Select Campus --</option>
+                        <option value="Cogeo">Cogeo</option>
+                        <option value="Cainta">Cainta</option>
+                    </select>
+                    -->
+                    
+                    <label for="email">Email Address:</label>
+                    <br>
+                    <input class="input-boxes" type="text" id="email" placeholder="Enter Email Address (Gclassroom email)">
+                    <br>
+                    <label for="section">Section:</label>
+                    <br>
+                    <input class="input-boxes" type="text" id="section" placeholder="Current Section">
+                    <br>
+                    <label for="password">Create Password:</label>
+                    <br>
+                    <input class="input-boxes" type="password" id="password" placeholder="Enter Password">
+                    <br>
+                </div>
+
+                <div id="subjects">
+                    <label for="sub1">Subjects:</label>
+                    <br>
+                    <input class="input-boxes-half" type="text" id="sub1" placeholder="Enter Subject 1">
+
+                    <input class="input-boxes-half" type="text" id="sub2" placeholder="Enter Subject 2">
+                    <br>
+
+                    <input class="input-boxes-half" type="text" id="sub3" placeholder="Enter Subject 3">
+
+                    <input class="input-boxes-half" type="text" id="sub4" placeholder="Enter Subject 4">
+                    <br>
+
+                    <input class="input-boxes-half" type="text" id="sub5" placeholder="Enter Subject 5">
+
+                    <input class="input-boxes-half" type="text" id="sub6" placeholder="Enter Subject 6">
+                    <br>
+                </div>
+                
+
+                <br>
+                <p>Already have an account? <b><a href="index.html">Log in</a></b></p>
+                <br>
+                <button id="register_button">Register</button>
+            
+        </div>
+    </div>
+
+
+
+   <script type="module">
+       
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getFirestore, setDoc, doc, deleteDoc  } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+        //import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+        apiKey: "AIzaSyDQ3f4wkzzqqZzSXTb4BcLAMAs8-JAYqJA",
+        authDomain: "icct-pmf-grade-viewer.firebaseapp.com",
+        projectId: "icct-pmf-grade-viewer",
+        storageBucket: "icct-pmf-grade-viewer.appspot.com",
+        messagingSenderId: "1098178333338",
+        appId: "1:1098178333338:web:3f6c8d3104db38f6316d23",
+        measurementId: "G-4SGCMCJHM1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+
+        // Initialize Cloud Firestore and get a reference to the service
+        const db = getFirestore(app);
+
+        register_button.addEventListener('click', async () => {
+
+            let studID = document.getElementById('student-id').value
+            let fName = document.getElementById('first-name').value
+            let mI = document.getElementById('middle-initial').value
+            let lName = document.getElementById('last-name').value
+            let email = document.getElementById('email').value
+            let section = document.getElementById('section').value
+            let password = document.getElementById('password').value
+
+            let sub1 = document.getElementById('sub1').value
+            let sub2 = document.getElementById('sub2').value
+            let sub3 = document.getElementById('sub3').value
+            let sub4 = document.getElementById('sub4').value
+            let sub5 = document.getElementById('sub5').value
+            let sub6 = document.getElementById('sub6').value
+            
+            try {
+                await setDoc(doc(db, "STUDENT_LIST", studID), {
+                    studentID : studID,
+                    name : fName + " " + mI +" "+ lName,
+                    email : email,
+                    section : section,
+                    password : password,
+                    sub1 : sub1,
+                    sub2 : sub2,
+                    sub3 : sub3,
+                    sub4 : sub4,
+                    sub5 : sub5,
+                    sub6 : sub6
+                })
+                alert('SUCCESS')
+            } catch (error) {
+                console.error(error)
+            }
+        });
+       
+    
+
+    </script>
+</body>
+
+</html>

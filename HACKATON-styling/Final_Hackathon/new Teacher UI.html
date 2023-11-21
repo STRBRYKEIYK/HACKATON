@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECR-GradeSync (eGS)</title>
+    <link rel="stylesheet" type="text/css" href="UI_styles.css">
+    <link rel="stylesheet" type="text/css" href="./css/general.css">
+</head>
+
+
+<body>
+    <header>
+        <nav class="container navigation-bar">
+            <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
+            <button class="btn-logout" id="btn-logout">Log out</button>
+        </nav>
+        <section class="container secondary-nav">
+            <div class="input-file-container">
+                <button class="dropzone" id="dropzone">Drag your file here!</button>
+                <input type="file" id="file-input" accept=".csv" class="input-file">
+            </div>
+            <button disabled="disabled" id="submit-button">Submit</button>
+        </section>
+    </header>
+    
+    <!--  -->
+    <main>
+        <section class="container table-container">
+            <div class="table-sub-container">
+                
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script> -->
+    <!-- <script type="module" src="Teacher_read_save_retrive_data.js"></script> -->
+    <!-- <script type="module" src="/Teacher_Workplace_read_save_retrive_data.js"></script> -->
+    <script src="UI_scripts.js"></script>
+
+
+
+</body>
+
+</html>
