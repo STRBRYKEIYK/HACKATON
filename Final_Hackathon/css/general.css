@@ -189,6 +189,7 @@ tr:nth-child(odd) {
 
 tr {
     transition: all 600ms ease;
+    cursor: pointer;
 }
 
 tr.selected-row {
