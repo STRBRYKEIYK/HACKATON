@@ -45,7 +45,7 @@ h6 {
 
 /* Variables */
 :root {
-    --clr-primary: #7f7fd5;
+    /* --clr-primary: #7f7fd5; */
     --clr-primary: #002060;
     --clr-secondary: #86a8e7;
     --clr-primary-95: #ebebf9;
@@ -189,6 +189,10 @@ tr:nth-child(odd) {
 
 tr {
     transition: all 600ms ease;
+}
+
+tr.selected-row {
+    outline: 1px solid var(--clr-slate-600);
 }
 
 tr:hover {
