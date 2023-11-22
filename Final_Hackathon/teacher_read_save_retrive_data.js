@@ -37,330 +37,333 @@ const firebaseConfig = {
     var stdnum, stdname , academic, trimester , section, day , time, cc , cd, prelim , midterm, finals
     , remark, cu,fn, en, email ;
 
-    document.getElementById('save_btn').addEventListener('click', ()=>{
-        
-                for (let i=0; i<results.data.length;i++){
-                     stdnum = results.data[i].STUDENT_NUM;
-                     stdname = results.data[i].STUDENT_NAME;
-                     academic = results.data[i].ACADEMIC_YEAR;
-                     trimester = results.data[i].TRIMESTER;
-                     section = results.data[i].SECTION;
-                     day = results.data[i].DAY;
-                     time = results.data[i].TIME;
-                     cc = results.data[i].COURSE_CODE;
-                     cd = results.data[i].COURSE_DESCRIPTION;
-                     prelim = results.data[i].PRELIM_GRADE;
-                     midterm = results.data[i].MIDTERM_GRADE;
-                     finals = results.data[i].FINAL_GRADE;
-                     remark = results.data[i].REMARK;
-                     cu = results.data[i].CREDIT_UNITS;
-                     fn = results.data[i].FACULTY_NAME;
-                     en = results.data[i].ECR_NAME;
-                     email=results.data[i].EMAIL;
-                     generatePasswExtension();
-                    var passwExtension = generatePasswExtension();
-                     
-                    if(prelim == "" && midterm=="" && finals==""){
-
-                        var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
-                        setDoc(
-                        ref, {
-                            STUDENT_NUM : stdnum,
-                            STUDENT_NAME : stdname,
-                            ACADEMIC_YEAR : academic,
-                            EMAIL_ADDRESS : email,
-                            TRIMESTER : trimester,
-                            SECTION : section,
-                            DAY : day,
-                            TIME : time,
-                            COURSE_CODE : cc,
-                            COURSE_DESCRIPTION : cd,
-                            PRELIM : prelim,
-                            MIDTERM : midterm,
-                            FINALS : finals,
-                            REMARK : remark,
-                            CREDIT_UNITS : cu,
-                            FACULTY_NAME : fn,
-                            }
-                            
-                        )
-                        generatePasswExtension();
-                        var passwExtension = generatePasswExtension();
-        
-                        //Generate_verification_code                
-                        var ref = doc(db, "GENERATE_CODE", passwExtension);
-                          setDoc(
-                            ref, {
-                                StudentID : stdnum,
-                                CourseCode : cc,
-                                TeacherName : teacher_name,
-                                TeacherID : teacher_id,
-                                sem : trimester,
-                                StudentEmail : email
-                                }
-                            )
-                            Email.send({
-                                Host : "smtp.elasticemail.com",
-                                Username : "guzmancarlo.123@gmail.com",
-                                Password : "BC0676D842C915962D03B202E85BE57229E7",
-                                To : email,
-                                From : "guzmancarlo.123@gmail.com",
-                                Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
-                                Body : "<h2>Dear, " + stdname
-                                    + "<br> <h2>Welcome</h2><p>to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at</p> ICCT COLLEGE!" 
-                                    + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
-                                    + "<br>"
-                                    + "<br> Registration Details: " 
-                                    + "<br>"
-                                    + "<br> Student ID: " + stdnum
-                                    + "<br> Teacher Name: " + teacher_name
-                                    + "<br> Course Enrolled: " + cc
-                                    + "<br> Verfication Code " + passwExtension   
-                                    + "<br>"
-                                    + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, you'll have quick access to your grades and valuable insights into your academic progress. "
-                                    + "<br>"
-                                    + "<br> Best regards,"
-                                    + "<br>"
-                                    + "<br> eCR-GradeCSync (eGCS) Team"
-                                })
-                                .then(()=>{
-                                    if(count == i){
-                                    alert("Added Succesfully");
-                                }
-                                else{
-                                    count + 1;
-                                    
-                                }
-                                })
-                                .catch((error)=>{
-                                    alert("Added failed:"+error);
-                                });
-
-                    }else if(midterm=="" && finals==""){
-                        var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
-                        setDoc(
-                        ref, {
-                            STUDENT_NUM : stdnum,
-                            STUDENT_NAME : stdname,
-                            ACADEMIC_YEAR : academic,
-                            EMAIL_ADDRESS : email,
-                            TRIMESTER : trimester,
-                            SECTION : section,
-                            DAY : day,
-                            TIME : time,
-                            COURSE_CODE : cc,
-                            COURSE_DESCRIPTION : cd,
-                            PRELIM : prelim,
-                            MIDTERM : midterm,
-                            FINALS : finals,
-                            REMARK : remark,
-                            CREDIT_UNITS : cu,
-                            FACULTY_NAME : fn,
-                            }
-                            
-                        )
-                        generatePasswExtension();
-                        var passwExtension = generatePasswExtension();
-                        var ref = doc(db, "GENERATE_CODE", passwExtension);
-                          setDoc(
-                            ref, {
-                                StudentID : stdnum,
-                                CourseCode : cc,
-                                TeacherName : teacher_name,
-                                TeacherID : teacher_id,
-                                sem : trimester,
-                                StudentEmail : email
-                                }
-                            )
-                            Email.send({
-                                Host : "smtp.elasticemail.com",
-                                Username : "guzmancarlo.123@gmail.com",
-                                Password : "BC0676D842C915962D03B202E85BE57229E7",
-                                To : email,
-                                From : "guzmancarlo.123@gmail.com",
-                                Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
-                                Body : "<h2>Dear, " + stdname
-                                    + "<br> <h2>Welcome</h2><p>to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at</p> ICCT COLLEGE!" 
-                                    + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
-                                    + "<br>"
-                                    + "<br> Registration Details: " 
-                                    + "<br>"
-                                    + "<br> Student ID: " + stdnum
-                                    + "<br> Teacher Name: " + teacher_name
-                                    + "<br> Course Enrolled: " + cc
-                                    + "<br> Verfication Code " + passwExtension   
-                                    + "<br>"
-                                    + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, you'll have quick access to your grades and valuable insights into your academic progress. "
-                                    + "<br>"
-                                    + "<br> Best regards,"
-                                    + "<br>"
-                                    + "<br> eCR-GradeCSync (eGCS) Team"
-                                })
-                                .then(()=>{
-                                    if(count == i){
-                                    alert("Added Succesfully");
-                                }
-                                else{
-                                    count + 1;
-                                    
-                                }
-                                })
-                                .catch((error)=>{
-                                    alert("Added failed:"+error);
-                                });
-
-                                
-
-
-                    } else if(finals==""){
-                        var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
-                        setDoc(
-                        ref, {
-                            STUDENT_NUM : stdnum,
-                            STUDENT_NAME : stdname,
-                            ACADEMIC_YEAR : academic,
-                            EMAIL_ADDRESS : email,
-                            TRIMESTER : trimester,
-                            SECTION : section,
-                            DAY : day,
-                            TIME : time,
-                            COURSE_CODE : cc,
-                            COURSE_DESCRIPTION : cd,
-                            PRELIM : prelim,
-                            MIDTERM : midterm,
-                            FINALS : finals,
-                            REMARK : remark,
-                            CREDIT_UNITS : cu,
-                            FACULTY_NAME : fn,
-                            }
-                            
-                        )
-                        generatePasswExtension();
-                        var passwExtension = generatePasswExtension();
-                        var ref = doc(db, "GENERATE_CODE", passwExtension);
-                          setDoc(
-                            ref, {
-                                StudentID : stdnum,
-                                CourseCode : cc,
-                                TeacherName : teacher_name,
-                                TeacherID : teacher_id,
-                                sem : trimester,
-                                StudentEmail : email
-                                }
-                            )
-                            Email.send({
-                                Host : "smtp.elasticemail.com",
-                                Username : "guzmancarlo.123@gmail.com",
-                                Password : "BC0676D842C915962D03B202E85BE57229E7",
-                                To : email,
-                                From : "guzmancarlo.123@gmail.com",
-                                Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
-                                Body : "<h2>Dear, " + stdname
-                                    + "<br> <h2>Welcome</h2><p>to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at</p> ICCT COLLEGE!" 
-                                    + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
-                                    + "<br>"
-                                    + "<br> Registration Details: " 
-                                    + "<br>"
-                                    + "<br> Student ID: " + stdnum
-                                    + "<br> Teacher Name: " + teacher_name
-                                    + "<br> Course Enrolled: " + cc
-                                    + "<br> Verfication Code " + passwExtension   
-                                    + "<br>"
-                                    + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, you'll have quick access to your grades and valuable insights into your academic progress. "
-                                    + "<br>"
-                                    + "<br> Best regards,"
-                                    + "<br>"
-                                    + "<br> eCR-GradeCSync (eGCS) Team"
-                                })
-                                .then(()=>{
-                                    if(count == i){
-                                    alert("Added Succesfully");
-                                }
-                                else{
-                                    count + 1;
-                                    
-                                }
-                                })
-                                .catch((error)=>{
-                                    alert("Added failed:"+error);
-                                });
-                           
-                                
-                            }else if(!finals==""){
-                                var ref = doc(db, "GENERATE_CODE", passwExtension);
-                          setDoc(
-                            ref, {
-                                StudentID : stdnum,
-                                CourseCode : cc,
-                                TeacherName : teacher_name,
-                                TeacherID : teacher_id,
-                                sem : trimester,
-                                StudentEmail : email
-                                }
-                            )
-                            Email.send({
-                                Host : "smtp.elasticemail.com",
-                                Username : "guzmancarlo.123@gmail.com",
-                                Password : "BC0676D842C915962D03B202E85BE57229E7",
-                                To : email,
-                                From : "guzmancarlo.123@gmail.com",
-                                Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
-                                Body : "<h2>Dear, " + stdname
-                                    + "<br> <h2>Welcome</h2><p>to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at</p> ICCT COLLEGE!" 
-                                    + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
-                                    + "<br>"
-                                    + "<br> Registration Details: " 
-                                    + "<br>"
-                                    + "<br> Student ID: " + stdnum
-                                    + "<br> Teacher Name: " + teacher_name
-                                    + "<br> Course Enrolled: " + cc
-                                    + "<br> Verfication Code " + passwExtension   
-                                    + "<br>"
-                                    + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, you'll have quick access to your grades and valuable insights into your academic progress. "
-                                    + "<br>"
-                                    + "<br> Best regards,"
-                                    + "<br>"
-                                    + "<br> eCR-GradeCSync (eGCS) Team"
-                                })
-                                .then(()=>{
-                                    if(count == i){
-                                    alert("Added Succesfully");
-                                }
-                                else{
-                                    count + 1;
-                                    
-                                }
-                                })
-                                .catch((error)=>{
-                                    alert("Added failed:"+error);
-                                }); 
-                        
-            }
-        }              
     
+document.getElementById('save_btn').addEventListener('click', ()=>{    
+    try {
+        for (let i=0; i<results.data.length;i++){
+            stdnum = results.data[i].STUDENT_NUM;
+            stdname = results.data[i].STUDENT_NAME;
+            academic = results.data[i].ACADEMIC_YEAR;
+            trimester = results.data[i].TRIMESTER;
+            section = results.data[i].SECTION;
+            day = results.data[i].DAY;
+            time = results.data[i].TIME;
+            cc = results.data[i].COURSE_CODE;
+            cd = results.data[i].COURSE_DESCRIPTION;
+            prelim = results.data[i].PRELIM_GRADE;
+            midterm = results.data[i].MIDTERM_GRADE;
+            finals = results.data[i].FINAL_GRADE;
+            remark = results.data[i].REMARK;
+            cu = results.data[i].CREDIT_UNITS;
+            fn = results.data[i].FACULTY_NAME;
+            en = results.data[i].ECR_NAME;
+            email=results.data[i].EMAIL; 
+                 
+    
+                //for Verification Only
+            if(prelim == "" && midterm=="" && finals==""){
+                var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                setDoc(
+                ref, {
+                    STUDENT_NUM : stdnum,
+                    STUDENT_NAME : stdname,
+                    ACADEMIC_YEAR : academic,
+                    EMAIL_ADDRESS : email,
+                    TRIMESTER : trimester,
+                    SECTION : section,
+                    DAY : day,
+                    TIME : time,
+                    COURSE_CODE : cc,
+                    COURSE_DESCRIPTION : cd,
+                    PRELIM : prelim,
+                    MIDTERM : midterm,
+                    FINALS : finals,
+                    REMARK : remark,
+                    CREDIT_UNITS : cu,
+                    FACULTY_NAME : fn,
+                    }
+                    
+                )        
+                    generateVerifCode();
+                    var verificationCode = generateVerifCode();
+                    var ref = doc(db, "GENERATE_CODE", verificationCode);
+                        setDoc(
+                        ref, {
+                            StudentID : stdnum,
+                            CourseCode : cc,
+                            TeacherName : teacher_name,
+                            TeacherID : teacher_id,
+                            sem : trimester,
+                            StudentEmail : email
+                            }
+                        )
+        
+                //send verification email for student registration/re-register
+                    Email.send({
+                        Host : "smtp.elasticemail.com",
+                        Username : "guzmancarlo.123@gmail.com",
+                        Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                        // backup Password : "76255F8348DC19DB61D000EBDBDB25AB5220",
+                        To : email,
+                        From : "ecr.gradecloudsync@gmail.com",
+                        Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
+                        Body : "<b><h1>Dear, " + stdname
+                            + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                            + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+                            + "</h4></b><br>"
+                            + "<br> Registration Details: " 
+                            + "<br>"
+                            + "<br> Student ID: " + stdnum
+                            + "<br> Teacher Name: " + teacher_name
+                            + "<br> Course Enrolled: " + cc
+                            + "<br><h2> Verfication Code: " + verificationCode   
+                            + "</h2><br>"
+                            + "<br> <h4><i>Just copy and paste your subject verification code<i></h4>"
+                            + "<p style='text-align: center;'><i><b>Note: Make sure you have received all your Subjects' verification code for this trimester before you register</b></i></p>"
+                            + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_registration.html' style='background-color: #4CAF50; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Click to Register Now</a></p></h2>"
+                            + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                            + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                            + "<br> Best regards,"
+                            + "<br>"
+                            + "<br> eCR-GradeCSync (eGCS) Team "
+                           
+                    })
+                    .then(()=>{
+                        if(count == i){
+                        alert("Success! Verification codes for your students have been successfully uploaded and sent to their respective email addresses.");
+                        }
+                        else{
+                            count + 1;
+                        }
+                    })
+                    .catch((error)=>{
+                        alert("Added failed:"+error);
+                    });
+
+                    //For Prelim Grades Only
+            }else if(midterm=="" && finals==""){
+                var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                setDoc(
+                ref, {
+                    STUDENT_NUM : stdnum,
+                    STUDENT_NAME : stdname,
+                    ACADEMIC_YEAR : academic,
+                    EMAIL_ADDRESS : email,
+                    TRIMESTER : trimester,
+                    SECTION : section,
+                    DAY : day,
+                    TIME : time,
+                    COURSE_CODE : cc,
+                    COURSE_DESCRIPTION : cd,
+                    PRELIM : prelim,
+                    MIDTERM : midterm,
+                    FINALS : finals,
+                    REMARK : remark,
+                    CREDIT_UNITS : cu,
+                    FACULTY_NAME : fn,
+                    }
+                    
+                )
+
+                //send email for Prelim grade
+                Email.send({
+                    Host : "smtp.elasticemail.com",
+                    Username : "guzmancarlo.123@gmail.com",
+                    Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                    To : email,
+                    From : "ecr.gradecloudsync@gmail.com",
+                    Subject : "Prelims Grade in " + cc + " Now Available for Viewing" ,
+                    Body : "<b><h1>Dear, " + stdname
+                        + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                        + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+
+                        + "</h4></b><br>"
+                        + "<br> Grade Details: " 
+                        + "<br>"
+                        + "<br> Student ID: " + stdnum
+                        + "<br> Teacher Name: " + teacher_name
+                        + "<br> Course Enrolled: " + cc
+                        + "<br><h2> Prelims Grade: " + prelim   
+                        + "</h2><br>"
+                        + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                        + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                        + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                        + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                        + "<br> Best regards,"
+                        + "<br>"
+                        + "<br> eCR-GradeCSync (eGCS) Team "
+                       
+                })
+                .then(()=>{
+                    if(count == i){
+                    alert("Success! PRELIM grades have been uploaded, and notifications have been sent to your students via email.");
+                    }
+                    else{
+                        count + 1;
+                    }
+                })
+                .catch((error)=>{
+                    alert("Added failed:"+error);
+                });
+
+            }else if(finals==""){
+                var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                setDoc(
+                ref, {
+                    STUDENT_NUM : stdnum,
+                    STUDENT_NAME : stdname,
+                    ACADEMIC_YEAR : academic,
+                    EMAIL_ADDRESS : email,
+                    TRIMESTER : trimester,
+                    SECTION : section,
+                    DAY : day,
+                    TIME : time,
+                    COURSE_CODE : cc,
+                    COURSE_DESCRIPTION : cd,
+                    PRELIM : prelim,
+                    MIDTERM : midterm,
+                    FINALS : finals,
+                    REMARK : remark,
+                    CREDIT_UNITS : cu,
+                    FACULTY_NAME : fn,
+                    }
+                    
+                )
+
+                //send email for Midterm grade
+                Email.send({
+                    Host : "smtp.elasticemail.com",
+                    Username : "guzmancarlo.123@gmail.com",
+                    Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                    To : email,
+                    From : "ecr.gradecloudsync@gmail.com",
+                    Subject : "Midterms Grade in " + cc + " Now Available for Viewing" ,
+                    Body : "<b><h1>Dear, " + stdname
+                        + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                        + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+
+                        + "</h4></b><br>"
+                        + "<br> Grade Details: " 
+                        + "<br>"
+                        + "<br> Student ID: " + stdnum
+                        + "<br> Teacher Name: " + teacher_name
+                        + "<br> Course Enrolled: " + cc
+                        + "<br> Prelims Grade: " + prelim 
+                        + "<br><h2> Midterms Grade: " + midterm   
+                        + "</h2><br>"
+                        + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                        + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                        + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                        + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                        + "<br> Best regards,"
+                        + "<br>"
+                        + "<br> eCR-GradeCSync (eGCS) Team "
+                       
+                })
+                .then(()=>{
+                    if(count == i){
+                        alert("Success! MIDTERM grades have been uploaded, and notifications have been sent to your students via email.");
+                    }
+                    else{
+                        count + 1;
+                    }
+                })
+                .catch((error)=>{
+                    alert("Added failed:"+error);
+                });
+            }else if(!finals==""){
+                
+                var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                setDoc(
+                ref, {
+                    STUDENT_NUM : stdnum,
+                    STUDENT_NAME : stdname,
+                    ACADEMIC_YEAR : academic,
+                    EMAIL_ADDRESS : email,
+                    TRIMESTER : trimester,
+                    SECTION : section,
+                    DAY : day,
+                    TIME : time,
+                    COURSE_CODE : cc,
+                    COURSE_DESCRIPTION : cd,
+                    PRELIM : prelim,
+                    MIDTERM : midterm,
+                    FINALS : finals,
+                    REMARK : remark,
+                    CREDIT_UNITS : cu,
+                    FACULTY_NAME : fn,
+                    }
+                    
+                )
+
+                //send email for Finals grade
+                Email.send({
+                    Host : "smtp.elasticemail.com",
+                    Username : "guzmancarlo.123@gmail.com",
+                    Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                    To : email,
+                    From : "ecr.gradecloudsync@gmail.com",
+                    Subject : "Finals Grade in " + cc + " Now Available for Viewing" ,
+                    Body : "<b><h1>Dear, " + stdname
+                        + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                        + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+                        + "</h4></b><br>"
+                        + "<br> Grade Details: " 
+                        + "<br>"
+                        + "<br> Student ID: " + stdnum
+                        + "<br> Teacher Name: " + teacher_name
+                        + "<br> Course Enrolled: " + cc
+                        + "<br> Prelims Grade: " + prelim 
+                        + "<br> Midterms Grade: " + midterm  
+                        + "<br><h2> Finals Grade: " + finals   
+                        + "</h2><br>"
+                        + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                        + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                        + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                        + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                        + "<br> Best regards,"
+                        + "<br>"
+                        + "<br> eCR-GradeCSync (eGCS) Team "
+                       
+                })
+                .then(()=>{
+                    if(count == i){
+                        alert("Success! FINAL grades have been uploaded, and notifications have been sent to your students via email.");
+                    }
+                    else{
+                        count + 1;
+                    }
+                })
+                .catch((error)=>{
+                    alert("Added failed:"+error);
+                });
+            }                             
+        }
+    } catch (error) {
+        alert(error)
+    }
 });
 
 
 
-//function to generate random number and special character to password
-function generatePasswExtension() {
+function generateVerifCode() {
     const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
-    const specialCharacters = '!#*_';
+    //const specialCharacters = '!#*_';
 
         //put all characters in one variable (except special character)
-    const allCharacters = uppercaseLetters + lowercaseLetters + numbers;
-    let passwordExt = '';
+    const allCharacters = uppercaseLetters + numbers +lowercaseLetters;
+    let randomVerifCode = '';
 
     // Include at least one uppercase letter, one number, and one special character
-    passwordExt += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
-    passwordExt += numbers[Math.floor(Math.random() * numbers.length)];
-    passwordExt += specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+    randomVerifCode += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+    randomVerifCode += numbers[Math.floor(Math.random() * numbers.length)];
+    randomVerifCode += lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];
 
     // Complete the rest of the password with random characters
-    for (let i = 1; i < 5; i++) {
-        passwordExt += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+    for (let i = 1; i <= 5; i++) {
+        randomVerifCode += allCharacters[Math.floor(Math.random() * allCharacters.length)];
     }
-    return passwordExt;
+    return randomVerifCode;
     }
