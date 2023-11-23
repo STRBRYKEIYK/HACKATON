@@ -109,10 +109,11 @@ h6 {
     color: hsl(1, 0%, 98%);
 }
 
+
 /* Forms */
 .forms {
     background-color: var(--clr-slate-50);
-    min-width: 550px;
+   
     max-width: 600px;
     padding: 2rem 2rem 3rem;
     box-shadow: var(--bx-shadow);
@@ -138,17 +139,15 @@ h6 {
     color: var(--clr-slate-800);
 }
 
+
 .veriflabel {
     min-width: 30px;
-    max-width: 50px;
-    white-space: nowrap;
+    max-width: 100%;
+    text-wrap:wrap;
     overflow:hidden;
-    text-overflow: ellipsis;
 }
 
-.subject-inputs {
-    /*width: 430px;*/
-}
+
 
 #sub1_verification,
 #sub2_verification,
@@ -158,6 +157,10 @@ h6 {
 #sub6_verification {
     max-width: 100px;
     height: 45px;
+}
+
+.subject-inputs {
+
 }
 
 /* Input boxes */
@@ -170,16 +173,22 @@ h6 {
     border-radius: var(--brd-radius);
     width: 100%;
     min-height: 40px;
-    max-height: 50px;
     
+}
+
+.veriflabel {
+    background: transparent;
+    max-height: 100%;
     resize: none;
     overflow: hidden;
     vertical-align: middle;
     align-items: center;
+    border: none;
+    font-size: smaller;
 }
 
 .inputs::placeholder {
-    font-size: medium;
+    font-size: smaller;
     color: var(--clr-slate-400);
 }
 
@@ -218,7 +227,6 @@ h6 {
 /* --util_text-align */
 .txt-center {
     text-align: center;
-
 }
 
 /* --util-place-item-center */
