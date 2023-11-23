@@ -16,7 +16,7 @@ fileInput.addEventListener('change', (event) => {
 
     // Truncate file name
     let fileName = selectedFile.name;
-    let maxCharacter = 16;
+    const maxCharacter = 16;
     fileNameEl.textContent = fileName.length >= maxCharacter ? fileName.substring(0, maxCharacter) + "..." : fileName;
 
     // Remove dropzone
