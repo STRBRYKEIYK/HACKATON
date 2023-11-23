@@ -45,7 +45,7 @@ h6 {
 
 /* Variables */
 :root {
-    --clr-primary: #7f7fd5;
+    --clr-primary: #002060;
     --clr-secondary: #86a8e7;
     --clr-gradient: linear-gradient(110deg, var(--clr-primary), var(--clr-secondary));
     --clr-slate-50: #f8fafc;
@@ -109,10 +109,12 @@ h6 {
     color: hsl(1, 0%, 98%);
 }
 
+
 /* Forms */
 .forms {
     background-color: var(--clr-slate-50);
-    max-width: 550px;
+   
+    max-width: 600px;
     padding: 2rem 2rem 3rem;
     box-shadow: var(--bx-shadow);
     border-radius: var(--brd-radius);
@@ -137,6 +139,27 @@ h6 {
     color: var(--clr-slate-800);
 }
 
+
+.veriflabel {
+    min-width: 30px;
+    max-width: 100%;
+    text-wrap:wrap;
+    overflow:hidden;
+}
+
+
+
+#sub1_verification,
+#sub2_verification,
+#sub3_verification,
+#sub4_verification,
+#sub5_verification,
+#sub6_verification {
+    max-width: 100px;
+    height: 45px;
+}
+
+
 /* Input boxes */
 .inputs {
     padding: calc(var(--sm) - 5px);
@@ -147,6 +170,18 @@ h6 {
     border-radius: var(--brd-radius);
     width: 100%;
     min-height: 40px;
+    
+}
+
+.veriflabel {
+    background: transparent;
+    max-height: 100%;
+    resize: none;
+    overflow: hidden;
+    vertical-align: middle;
+    align-items: center;
+    border: none;
+    font-size: smaller;
 }
 
 .inputs::placeholder {

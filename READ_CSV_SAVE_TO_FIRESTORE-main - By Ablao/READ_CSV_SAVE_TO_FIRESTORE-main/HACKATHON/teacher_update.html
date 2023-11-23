@@ -18,7 +18,10 @@
                 <div class="personal-data">
                     <span class="sub-labels">Teacher ID: </span>
                     <input class="inputs mb-sm" type="text" id="teacher_id" placeholder="Enter Teacher ID">
-                    <span class="sub-labels">Name: </span>
+                    <button class="btn-solid full mb-lg" id="show_button">Show Details</button>
+                    <p id="namelabel"></p>
+
+                    <span class="sub-labels">Update Name: </span> 
                     <input class="inputs mb-xs" type="text" id="first_name" placeholder="First Name">
                     <input class="inputs mb-xs" type="text" id="middle_initial" placeholder="M.I.">
                     <input class="inputs mb-sm" type="text" id="last_name" placeholder="Last Name">
@@ -26,7 +29,8 @@
                     <input class="inputs" type="password" id="password" placeholder="Enter Password">
                 </div>
             </div>
-            <button class="btn-solid full mb-lg" id="register_button">Update</button>
+            <button class="btn-solid full mb-lg" id="update_button">Update</button>
+            <button class="btn-solid full mb-lg" id="delete_button">Delete</button>
             <button class="btn-solid full mb-lg" id="back_btn">back</button>
         </div>
     </section>
@@ -55,6 +59,8 @@ const firebaseConfig = {
   
   const db = getFirestore();
 
+  var namelbl = document.getElementById('namelabel')
+
   var teacher_id = document.getElementById('teacher_id');
   var first_name = document.getElementById('first_name');
   var middle_initial = document.getElementById('middle_initial');
@@ -62,7 +68,28 @@ const firebaseConfig = {
   var pass = document.getElementById('password');
   var register_button = document.getElementById('register_button');
 
-  function SaveRegistrationFrom(){
+  async function ShowAccount(){
+    try {
+        if(teacher_id.value==""){
+        alert("Please Input Teacher ID first");
+    }else{
+    var ref = doc(db, "TEACHER_LIST",teacher_id.value);
+        const docsnap = await getDoc(ref);
+        if(docsnap.exists()){  
+        //assigning value from firestore to display
+        var user_name = docsnap.data().TeacherName;
+    
+        namelbl.innerText = "Current Name: " + user_name
+        } else {
+            alert('data not found')
+        }  
+    }
+    } catch (error) {
+        alert(error)
+    }
+ }
+
+  function UpdateAccount(){
     if(teacher_id.value=="" || pass.value=="" || first_name.value=="" || middle_initial.value=="" || last_name.value==""){
         alert("Please complete the fill up form first");
     }else{
@@ -78,6 +105,19 @@ const firebaseConfig = {
     alert('Registration Successful!');
  }
  }
+
+ async function DeleteAccount(){
+    try {
+        if(teacher_id.value=="" ){
+        alert("Please input Teacher ID first");
+        }else{
+             await deleteDoc(doc(db, "TEACHER_LIST", teacher_id.value));
+        alert('Delete Successful!');
+        }
+    } catch (error) {
+        alert(error)   
+    }
+ }
  var back_btn=document.getElementById('back_btn');
         function backteacher(){
             window.open("admin_form.html");
@@ -85,7 +125,9 @@ const firebaseConfig = {
         }
         back_btn.addEventListener('click',backteacher);
 
-    register_button.addEventListener('click', SaveRegistrationFrom);
+        show_button.addEventListener('click', ShowAccount);
+        update_button.addEventListener('click', UpdateAccount);
+        delete_button.addEventListener('click', DeleteAccount);
     </script>
 
 </body>
