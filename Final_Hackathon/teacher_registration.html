@@ -1,51 +1,94 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <title>Teacher Registration</title>
+    <title>SIGNUP</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="teacher_registration.css" />
-    <style>
-        .message {
-            display: flex;
-            color: black;
-            text-align: center;
-        }
-    </style>
-    
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="student_registration.css" />
 </head>
-<body>
-    <div class="container">
-        <div class="signup-box">
-            <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Create Teacher Account</h1>
-            
-                <br>
-                <label for="teacher-id">TeacherID:</label>
-                <br>
-                <input class="input-boxes" type="text" id="teacher_id" placeholder="Enter TeacherID">
-                <br>
 
-                <label for="first-name">Name:</label>
-                <br>
-                <input class="input-boxes-half" type="text" id="first_name" placeholder="First Name">
-                <input class="input-boxes-half" type="text" id="middle_initial" placeholder="M.I.">
-                <input class="input-boxes-half" type="text" id="last_name" placeholder="Last Name">
-                <br>
-                
-                <label for="password">Password:</label>
-                <br>
-                <input class="input-boxes" type="password" id="password" placeholder="Create Password">
-                <br>
-                <p>Already have an account? <b><a href="teacher_login.html">Log in</a></b></p>
-                <br>
-                <button id="register_button">Register</button>
-            
+<body class="place-center">
+    <section class="container" >
+        <div class=" forms">
+            <span class="labels mb-lg">Register</span>
+
+            <div class="register-container mb-md">
+                <div class="personal-data">
+                    <span class="sub-labels">Teacher ID: </span>
+                    <input class="inputs mb-sm" type="text" id="teacher_id" placeholder="Enter Teacher ID">
+                    <span class="sub-labels">Name: </span>
+                    <input class="inputs mb-xs" type="text" id="first_name" placeholder="First Name">
+                    <input class="inputs mb-xs" type="text" id="middle_initial" placeholder="M.I. (Optional)">
+                    <input class="inputs mb-sm" type="text" id="last_name" placeholder="Last Name">
+                    <span class="sub-labels">Password: </span>
+                    <input class="inputs" type="password" id="password" placeholder="Enter Password">
+                </div>
+            </div>
+            <button class="btn-solid full mb-lg" id="register_button">Register</button>
+            <p class="sub-labels txt-center">Already have an account? <b><a class="links" href="index.html">Log
+                        in</a></b>
+            </p>
         </div>
-    </div>
+        </div>
+    </section>
 
+    <script type="module">
 
-<script type="module" src="teacher_registration.js"></script>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDFWV4k9-XmABgNGmleyXLTcuEn41rMHK8",
+    authDomain: "hackathon-26f12.firebaseapp.com",
+    databaseURL: "https://hackathon-26f12-default-rtdb.firebaseio.com",
+    projectId: "hackathon-26f12",
+    storageBucket: "hackathon-26f12.appspot.com",
+    messagingSenderId: "1071789540560",
+    appId: "1:1071789540560:web:6227da20f3a3a3a9ab0ad5"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  import {
+    getFirestore, doc, getDoc, collection, addDoc, setDoc, updateDoc, deleteDoc, deleteField
+  }
+  from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+  
+  const db = getFirestore();
+
+  var teacher_id = document.getElementById('teacher_id');
+  var first_name = document.getElementById('first_name');
+  var middle_initial = document.getElementById('middle_initial');
+  var last_name = document.getElementById('last_name');
+  var pass = document.getElementById('password');
+  var register_button = document.getElementById('register_button');
+
+  
+
+  function SaveRegistrationFrom(){
+    if(teacher_id.value=="" || pass.value=="" || first_name.value=="" || last_name.value==""){
+        alert("Please complete the fill up form first");
+    }else{
+    var ref = doc(db, "TEACHER_LIST",teacher_id.value);
+        setDoc( 
+        ref, {
+        TeacherID : teacher_id.value,
+        TeacherName : first_name.value + " " + middle_initial.value +" "+ last_name.value,
+        password : pass.value
+        
+     }   
+    )
+    alert('Registration Successful!');
+   
+ }
+ }
+ 
+ 
+
+    register_button.addEventListener('click', SaveRegistrationFrom);
+    </script>
 
 </body>
 
