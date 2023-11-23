@@ -37,7 +37,7 @@ header {
 
 /* Secondary nav */
 .secondary-nav {
-    display: flex;
+    display: none;
     gap: var(--sm);
     align-items: baseline;
 }
@@ -49,31 +49,25 @@ header {
     min-width: 5.625rem;
 }
 
-.submit-button:disabled,
-.clear-button:disabled {
-    background-color: var(--clr-secondary-95);
-    cursor: not-allowed;
-}
-
-.submit-button:enabled,
-.clear-button:enabled {
+.submit-button,
+.clear-button {
     border-radius: var(--brd-radius);
     font-family: var(--fnt-primary);
     cursor: pointer;
 }
 
-.submit-button:enabled {
+.submit-button {
     background-image: var(--clr-gradient);
     background-size: 200% 100%;
     color: hsl(1, 0%, 98%);
     border: none;
 }
 
-.submit-button:enabled:hover {
+.submit-button:hover {
     background: var(--clr-primary);
 }
 
-.clear-button:enabled {
+.clear-button {
     box-shadow: inset 0 0 0 2px var(--clr-primary);
     color: var(--clr-secondary);
     background: none;
@@ -82,7 +76,7 @@ header {
     transition: background-color .2s, color .1s;
 }
 
-.clear-button:enabled:hover {
+.clear-button:hover {
     background-color: var(--clr-primary);
     color: hsl(1, 0%, 98%);
 }
@@ -155,6 +149,7 @@ header {
     background-color: var(--clr-secondary);
 }
 
+/* Media queries */
 /* xs */
 @media (max-width: 475px) {
 

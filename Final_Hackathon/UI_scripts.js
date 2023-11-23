@@ -1,6 +1,7 @@
 const submitBtn = document.getElementById('submit-button');
 const clearBtn = document.getElementById('clear-button');
 const fileNameEl = document.getElementById('file-name');
+const secondaryNav = document.querySelector('.secondary-nav');
 const dropzone = document.querySelector('.input-file-container');
 const logoutBtn = document.getElementById('btn-logout');
 
@@ -16,15 +17,16 @@ fileInput.addEventListener('change', (event) => {
 
     // Truncate file name
     let fileName = selectedFile.name;
-    const maxCharacter = 16;
+    let maxCharacter = 16;
     fileNameEl.textContent = fileName.length >= maxCharacter ? fileName.substring(0, maxCharacter) + "..." : fileName;
 
     // Remove dropzone
     dropzone.style.display = 'none';
 
-    // Enabling the buttons
-    submitBtn.removeAttribute('disabled');
-    clearBtn.removeAttribute('disabled');
+    // Show secondary navigation
+    secondaryNav.style.display = 'flex';
+
+    adjustPaddingTop();
 });
 
 // Handle rendering table
@@ -67,13 +69,14 @@ submitBtn.addEventListener('click', () => {
 // Handle Clear
 clearBtn.addEventListener('click', () => {
     fileInput.value = null;
-    fileNameEl.textContent = ''
+    fileNameEl.textContent = '';
     clearTable();
 
-    submitBtn.disabled = true;
-    clearBtn.disabled = true;
+    // Show dropzone again
+    dropzone.style.display = '';
 
-    dropzone.style.display = ''
+    // Hide secondary navigation bar again
+    secondaryNav.style.display = '';
 })
 
 // Handle clear table
@@ -86,7 +89,7 @@ function clearTable() {
 
 // Handle logout
 logoutBtn.addEventListener('click', () => {
-    alert('*/nalungkot')
+    alert('nalungkot')
 })
 
 // Adjust 'main' padding dynamically
