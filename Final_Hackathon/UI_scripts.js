@@ -86,7 +86,7 @@ function clearTable() {
 
 // Handle logout
 logoutBtn.addEventListener('click', () => {
-    alert('nalungkot')
+    alert('*/nalungkot')
 })
 
 // Adjust 'main' padding dynamically
