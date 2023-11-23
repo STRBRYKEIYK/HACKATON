@@ -11,7 +11,7 @@
 
 <body class="place-center">
     <section class="container" >
-        <div class=" forms">
+        <div class=" forms" style="max-width: 550px;">
             <span class="labels mb-lg">Register</span>
 
             <div class="register-container mb-md">
@@ -67,25 +67,45 @@ const firebaseConfig = {
 
   
 
-  function SaveRegistrationFrom(){
-    if(teacher_id.value=="" || pass.value=="" || first_name.value=="" || last_name.value==""){
-        alert("Please complete the fill up form first");
-    }else{
-    var ref = doc(db, "TEACHER_LIST",teacher_id.value);
-        setDoc( 
-        ref, {
-        TeacherID : teacher_id.value,
-        TeacherName : first_name.value + " " + middle_initial.value +" "+ last_name.value,
-        password : pass.value
+async function SaveRegistrationFrom(){
+
+    var ref = doc(db, "TEACHER_LIST", teacher_id.value);
+        const docsnap = await getDoc(ref);
+            
+        if(docsnap.exists()){   //If teacherID already in database
+        alert('User already exists')
+
+        }else{  //If teacherID still not in database create as new user
+            if(teacher_id.value=="" || pass.value=="" || first_name.value=="" || last_name.value==""){
+                alert("Please complete the fill up form first");
+            }else{
+                var ref = doc(db, "TEACHER_LIST",teacher_id.value);
+                    setDoc( 
+                    ref, {
+                    TeacherID : teacher_id.value,
+                    TeacherName : first_name.value + " " + middle_initial.value +" "+ last_name.value,
+                    password : pass.value
+                    })
+            alert('Registration Successful!');
         
-     }   
-    )
-    alert('Registration Successful!');
-   
- }
+            }
+        }
+
+
  }
  
- 
+async function addDocTest(){
+   try {
+     // Add a new document with a generated id.
+     const docRef = await addDoc(collection(db, "cities", "id1"), {
+    name: "Tokyo",
+    country: "Japan"
+    });
+    alert("Document written with ID: ", docRef.id);
+   } catch (error) {
+    alert(error)
+   }
+} 
 
     register_button.addEventListener('click', SaveRegistrationFrom);
     </script>
