@@ -10,8 +10,9 @@
 </head>
 
 <body class="place-center">
+    
     <section class="container">
-        <div class=" forms">
+        <div class=" forms"> 
             <span class="labels mb-lg">Register</span>
 
             <div class="register-container mb-md">
@@ -24,17 +25,37 @@
                     <input class="inputs mb-sm" type="text" id="last-name" placeholder="Last Name">
                     <span class="sub-labels">Password: </span>
                     <input class="inputs" type="password" id="password" placeholder="Enter Password">
+                    <p style="font-size: smaller; color: red;"><i>For new users: <br>Please be aware that you won't be able to change your password after registration. </i></p>
+                    <div style="margin: 10px; font-size: smaller;">
+                        
+                    </div>
                 </div>
+
+                
                 <div class="subjects">
-                    <span class="sub-labels">Subjects: </span>
+                    <span class="sub-labels">Subject Verification: </span>
                     <div class="subject-inputs">
-                        <div>
-                            <input class="inputs mb-xs" type="text" id="sub1_verification" placeholder="Enter Subject">
-                            <input class="inputs mb-xs" type="text" id="sub2_verification" placeholder="Enter Subject">
-                            <input class="inputs mb-xs" type="text" id="sub3_verification" placeholder="Enter Subject">
-                            <input class="inputs mb-xs" type="text" id="sub4_verification" placeholder="Enter Subject">
-                            <input class="inputs mb-xs" type="text" id="sub5_verification" placeholder="Enter Subject">
-                            <input class="inputs mb-xs" type="text" id="sub6_verification" placeholder="Enter Subject">
+                        <div class="verif-form">
+                            <input class="inputs mb-xs" id="sub1_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified1" placeholder=" --" disabled></textarea>
+                            <br>
+                            <input class="inputs mb-xs" id="sub2_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified2" placeholder=" --" disabled></textarea>
+                            <br>
+                            <input class="inputs mb-xs" id="sub3_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified3" placeholder=" --" disabled></textarea>
+                            <br>
+                            <input class="inputs mb-xs" id="sub4_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified4" placeholder=" --" disabled></textarea>
+                            <br>
+                            <input class="inputs mb-xs" id="sub5_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified5" placeholder=" --" disabled></textarea>
+                            <br>
+                            <input class="inputs mb-xs" id="sub6_verification" placeholder="Enter Code">
+                            <textarea class="veriflabel" id="verified6" placeholder=" --" disabled></textarea>
+                            <br>              
+                            
+                            <p style="font-size: smaller;"><i>Note: Make sure your subjects are complete and correct</i></p>
                         </div>
                     </div>
                 </div>
@@ -83,6 +104,8 @@ const firebaseConfig = {
   var fnid;
   var tri;
 
+
+    
     var sub1_btn = document.getElementById('verify-button');
 
     let studID = document.getElementById('student-id');
@@ -99,30 +122,63 @@ const firebaseConfig = {
     let sub4 = document.getElementById('sub4_verification');
     let sub5 = document.getElementById('sub5_verification');
     let sub6 = document.getElementById('sub6_verification');
+
+    let verif1 = document.getElementById('verified1');
+    let verif2 = document.getElementById('verified2');
+    let verif3 = document.getElementById('verified3');
+    let verif4 = document.getElementById('verified4');
+    let verif5 = document.getElementById('verified5');
+    let verif6 = document.getElementById('verified6');
+
     let register_button = document.getElementById('register_button');
 
 try{
 function conditionStatement(){
 if (sub1.value == ""){
     alert("Please Enter Verification First!");
+    //make label blank just in case when verif code is cleared 
+    verif1.value = ' --';
+    verif2.value = ' --';
+    verif3.value = ' --';
+    verif4.value = ' --';
+    verif5.value = ' --';
+    verif6.value = ' --';
 }else if(sub2.value=="" && sub3.value=="" && sub4.value=="" && sub5.value=="" && sub6.value==""){
     sub1_verified();
     checksub=1;
+    //make label blank just in case when verif code is cleared 
+    verif2.value = ' --';
+    verif3.value = ' --';
+    verif4.value = ' --';
+    verif5.value = ' --';
+    verif6.value = ' --';
 }else if(sub3.value=="" && sub4.value=="" && sub5.value=="" && sub6.value==""){
     sub1_verified();
     sub2_verified();
     checksub=2;
+    //make label blank just in case when verif code is cleared 
+    verif3.value = ' --';
+    verif4.value = ' --';
+    verif5.value = ' --';
+    verif6.value = ' --';
 }else if(sub4.value=="" && sub5.value=="" && sub6.value==""){
     sub1_verified();
     sub2_verified();
     sub3_verified();
     checksub=3;
+    //make label blank just in case when verif code is cleared 
+    verif4.value = ' --';
+    verif5.value = ' --';
+    verif6.value = ' --';
 }else if(sub5.value=="" && sub6.value==""){
     sub1_verified();
     sub2_verified();
     sub3_verified();
     sub4_verified();
     checksub=4;
+    //make label blank just in case when verif code is cleared 
+    verif5.value = ' --';
+    verif6.value = ' --';
 }else if(sub6.value==""){
     sub1_verified();
     sub2_verified();
@@ -130,6 +186,8 @@ if (sub1.value == ""){
     sub4_verified();
     sub5_verified();
     checksub=5;
+    //make label blank just in case when verif code is cleared 
+    verif6.value = ' --';
 }
 else if(!sub6.value==""){
     sub1_verified();
@@ -156,16 +214,16 @@ async function sub1_verified(){
         tri = docsnap.data().sem;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub1.value = cc1 + " - " + fn;
+        verif1.value = cc1 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject01).");
+        verif1.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject01).");
+    verif1.value = "Verification does not exist";
     }
 }
 async function sub2_verified(){
@@ -177,16 +235,16 @@ async function sub2_verified(){
         cc2 = docsnap.data().CourseCode;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub2.value = cc2 + " - " + fn;
+        verif2.value = cc2 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject02).");
+        verif2.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject02).");
+    verif2.value = "Verification does not exist";
     }
 }
 async function sub3_verified(){
@@ -198,16 +256,16 @@ async function sub3_verified(){
         cc3 = docsnap.data().CourseCode;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub3.value = cc3 + " - " + fn;
+        verif3.value = cc3 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject03).");
+        verif3.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject03).");
+    verif3.value = "Verification does not exist";
     }
 }
 async function sub4_verified(){
@@ -220,16 +278,16 @@ async function sub4_verified(){
         tri = docsnap.data().sem;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub4.value = cc4 + " - " + fn;
+        verif4.value = cc4 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject04).");
+        verif4.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject04).");
+    verif4.value = "Verification does not exist";
     }
 }
 async function sub5_verified(){
@@ -241,16 +299,16 @@ async function sub5_verified(){
         cc5 = docsnap.data().CourseCode;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub5.value = cc5 + " - " + fn;
+        verif5.value = cc5 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject05).");
+        verif5.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject05).");
+    verif5.value = "Verification does not exist";
     }
 }
 
@@ -263,115 +321,139 @@ async function sub6_verified(){
         cc6 = docsnap.data().CourseCode;
         fn = docsnap.data().TeacherName;
         fnid = docsnap.data().TeacherID;
-        sub6.value = cc6 + " - " + fn;
+        verif6.value = cc6 + " - " + fn;
     }
         
     else{
-        alert("Please recheck your verfication email (subject06).");
+        verif6.value = "Please recheck your verfication email!"
       }
           
 }
 else{
-    alert("Verification does not exist (subject06)");
+    verif6.value = "Verification does not exist";
     }
 }
 
+
+
 function SaveRegistrationFrom(){
-    if(studID.value=="" || fName.value=="" || lName.value=="" || password.value==""){
+    try {
+        if(studID.value=="" || fName.value=="" || lName.value=="" || password.value==""){
         alert("Please Finish the fill up first");
-    }else if(checksub==1){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1
-        })
-        alert('Registered Successful!');
-        
-    }else if(checksub==2){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1,
-            subTwo : cc2
-        })
-        alert('Registered Successful!');
-    }else if(checksub==3){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1,
-            subTwo : cc2,
-            subThree : cc3
-        })
-        alert('Registered Successful!');
-    }else if(checksub==4){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1,
-            subTwo : cc2,
-            subThree : cc3,
-            subFour : cc4
-        })
-        alert('Registered Successful!');
-    }else if(checksub==5){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1,
-            subTwo : cc2,
-            subThree : cc3,
-            subFour : cc4,
-            subFive : cc5
-        })
-        alert('Registered Successful!');
-    }else if(checksub==6){
-        var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
-            setDoc( 
-            ref, {
-            studentID : studID.value,
-            name : fName.value + " " + mI.value +" "+ lName.value,
-            password : password.value,
-            trimester : tri,
-            subOne : cc1,
-            subTwo : cc2,
-            subThree : cc3,
-            subFour : cc4,
-            subFive : cc5,
-            subSix : cc6
-        })
-        alert('Registered Successful!');
-        
+        }else if(checksub==1){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1
+            })
+            alert('Registered Successful!');
+            
+        }else if(checksub==2){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1,
+                subTwo : cc2
+            })
+            alert('Registered Successful!');
+        }else if(checksub==3){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1,
+                subTwo : cc2,
+                subThree : cc3
+            })
+            alert('Registered Successful!');
+        }else if(checksub==4){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1,
+                subTwo : cc2,
+                subThree : cc3,
+                subFour : cc4
+            })
+            alert('Registered Successful!');
+        }else if(checksub==5){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1,
+                subTwo : cc2,
+                subThree : cc3,
+                subFour : cc4,
+                subFive : cc5
+            })
+            alert('Registered Successful!');
+        }else if(checksub==6){
+            var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",studID.value,tri);
+                setDoc( 
+                ref, {
+                studentID : studID.value,
+                name : fName.value + " " + mI.value +" "+ lName.value,
+                password : password.value,
+                trimester : tri,
+                subOne : cc1,
+                subTwo : cc2,
+                subThree : cc3,
+                subFour : cc4,
+                subFive : cc5,
+                subSix : cc6
+            })
+            alert('Registered Successful!');
+            
         }
+
+        window.location.assign("http://e-class-record-cloud-sync-student.fast-page.org");
+    } catch (error) {
+        alert(error)
     }
+}
         sub1_btn.addEventListener('click',conditionStatement);
-        register_button.addEventListener('click',SaveRegistrationFrom);
+
+            //confirmation for register
+        document.getElementById("register_button").addEventListener("click", function() {
+            // Ask for confirmation
+            var userConfirmation = confirm("Are you sure you want to finish registration? Take note you cannot change your password after registration");
+
+            // Check the user's response
+            if (userConfirmation) {
+                SaveRegistrationFrom()
+
+            } else {
+
+            }
+        });
+        
         }catch(Error){
         console.log(Error);
     }
 
-    </script>
 
+    </script>
+    
+    <script>alert('For Verification, check your email inbox or spam for the verification codes of your subject')</script>
 </body>
 
 </html>
