@@ -70,6 +70,40 @@ h6 {
     --lg: 2rem;
 }
 
+/* Headers */
+header {
+    background-color: var(--clr-slate-50);
+    box-shadow: var(--bx-shadow);
+    width: 100%;
+
+    position: fixed;
+    padding-block: var(--sm);
+}
+
+/* Primary navigation */
+.primary-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-block: var(--sm);
+}
+
+.system-name {
+    font-weight: 500;
+    font-size: var(--md);
+    color: var(--clr-primary);
+}
+
+.btn-logout {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    fill: var(--clr-secondary);
+}
+
+.btn-logout:hover>svg {
+    fill: var(--clr-primary);
+}
+
 /* Buttons */
 .btn-solid,
 .btn-ghost {

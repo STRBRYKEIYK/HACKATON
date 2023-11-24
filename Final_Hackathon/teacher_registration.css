@@ -6,22 +6,22 @@ body {
 }
 
 .container {
-    display:flex;
-    justify-content:center;
-    align-items: center; 
-    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 
 }
 
 .signup-box {
-    
+
     background-color: #ffffff;
     padding: 20px 50px 40px 50px;
     text-align: center;
     border-radius: 20px;
     box-shadow: #2022259f insets;
     margin-bottom: 25px;
-    max-width: 2000px ;
+    max-width: 2000px;
 }
 
 #personal {
@@ -32,8 +32,9 @@ body {
     float: right;
 }
 
-#personal, #subjects {
-   margin: 20px;
+#personal,
+#subjects {
+    margin: 20px;
 }
 
 label {

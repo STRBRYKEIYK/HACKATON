@@ -13,6 +13,7 @@
 <body>
     <header>
         <nav class="container navigation-bar">
+
             <section class="primary-nav">
                 <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
                 <button class="btn-logout" id="btn-logout" title="Log-out">
@@ -22,16 +23,19 @@
                     </svg>
                 </button>
             </section>
+
             <section class="secondary-nav">
                 <button class="submit-button" id="submit-button">Finalized</button>
                 <button class="clear-button" id="clear-button">Clear</button>
                 <span class="file-name" id="file-name"></span>
             </section>
+
         </nav>
     </header>
 
     <!--  -->
     <main>
+
         <section class="container input-file-container">
             <div class="dropzone">
                 <label for="input-file" class="input-label">
@@ -40,11 +44,13 @@
                 <input id="input-file" type="file" accept=".csv" />
             </div>
         </section>
+
         <section class="container table-container">
             <div class="table-sub-container">
 
             </div>
         </section>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
