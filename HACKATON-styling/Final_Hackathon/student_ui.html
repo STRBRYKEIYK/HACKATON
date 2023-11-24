@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon</title>
+    <link rel="stylesheet" href="student_ui_style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="container navigation-bar">
+            <section class="primary-nav">
+                <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
+                <button class="btn-logout" id="btn-logout" title="Log-out">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                        <path
+                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                    </svg>
+                </button>
+            </section>
+
+            <section class="secondary-nav">
+                <div class="dropdown">
+                    <button class="dropbtn">Trime</button>
+                    <div class="dropdown-content">
+                        <a href="#" data-1st="1st">First</a>
+                        <a href="#" data-2nd="2nd">Second</a>
+                        <a href="#" data-3rd="3rd">Third</a>
+                    </div>
+                </div>
+            </section>
+
+        </nav>
+    </header>
+
+    <!--  -->
+    <main>
+        <section class="container table-container">
+            <div class="table-sub-container">
+                <table>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Description</th>
+                        <th>Prelim Grade</th>
+                        <th>Midterm Grade</th>
+                        <th>Final Grade</th>
+                        <th>Section</th>
+                        <th>Instructor</th>
+                        <th>Credit Units</th>
+                    </tr>
+                    <tr>
+                        <td id="sub1"></td>
+                        <td id="cd1"></td>
+                        <td id="pr1"></td>
+                        <td id="md1"></td>
+                        <td id="fn1"></td>
+                        <td id="section1"></td>
+                        <td id="f_n1"></td>
+                        <td id="cu1"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub2"></td>
+                        <td id="cd2"></td>
+                        <td id="pr2"></td>
+                        <td id="md2"></td>
+                        <td id="fn2"></td>
+                        <td id="section2"></td>
+                        <td id="f_n2"></td>
+                        <td id="cu2"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub3"></td>
+                        <td id="cd3"></td>
+                        <td id="pr3"></td>
+                        <td id="md3"></td>
+                        <td id="fn3"></td>
+                        <td id="section3"></td>
+                        <td id="f_n3"></td>
+                        <td id="cu3"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub4"></td>
+                        <td id="cd4"></td>
+                        <td id="pr4"></td>
+                        <td id="md4"></td>
+                        <td id="fn4"></td>
+                        <td id="section4"></td>
+                        <td id="f_n4"></td>
+                        <td id="cu4"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub5"></td>
+                        <td id="cd5"></td>
+                        <td id="pr5"></td>
+                        <td id="md5"></td>
+                        <td id="fn5"></td>
+                        <td id="section5"></td>
+                        <td id="f_n5"></td>
+                        <td id="cu5"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub6"></td>
+                        <td id="cd6"></td>
+                        <td id="pr6"></td>
+                        <td id="md6"></td>
+                        <td id="fn6"></td>
+                        <td id="section6"></td>
+                        <td id="f_n6"></td>
+                        <td id="cu6"></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script type="module" src="student_ui_view_grades.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>LOGIN</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="./css/general.css" />
+    <meta http-equiv="refresh" content="">
+</head>
+
+<body class="place-center">
+    <section class="container">
+        <div class="forms student-login">
+            <span class="labels mb-lg">Student Login</span>
+            <input class="inputs mb-sm" type="text" id="student_id" placeholder="Student ID">
+            <input class="inputs mb-lg" type="password" id="password" placeholder="Password">
+            <button class="btn-solid full mb-lg" id="studLogin_button">Log in</button>
+            <span class="sub-labels txt-center">Don't have an account? <a class="links"
+                    href="Student_Registration.html">Register!</a></span>
+            <span class="sub-labels txt-center"><a class="links" href="teacher_login.html">Log in as a
+                    teacher</a></span>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script type="module" src="student_login_loginauth.js"></script>
+</body>
+
+</html>

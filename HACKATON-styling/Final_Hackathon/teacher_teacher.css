@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.mt-3 {
+    justify-content: center;
+    display: flex;
+}
+
+.header {
+    text-align: left;
+    margin-left: 5px;
+    color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: verdana;
+}
+
+.inputbox {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.mt-3 .table {
+    font-size: 12px;
+
+}
