@@ -32,11 +32,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let selectedVariable = "1st";
+
 function handleItemClick(event) {
   event.preventDefault();
-  selectedVariable = event.target.getAttribute('data-1st');
+  selectedVariable = event.target.dataset["1st"] || event.target.dataset["2nd"] || event.target.dataset["3rd"];
   console.log(selectedVariable);
 }
+
 let dropdownItems = document.querySelectorAll('.dropdown-content a');
 dropdownItems.forEach(item => {
   item.addEventListener('click', handleItemClick);
