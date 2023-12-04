@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECR-GradeSync (eGS)</title>
+    <link rel="stylesheet" type="text/css" href="/teacher_workplace.css">
+    <link rel="stylesheet" type="text/css" href="/general.css">
+</head>
+
+
+<body>
+    <header>
+        <nav class="container navigation-bar">
+            <section class="primary-nav">
+                <span class="system-name">eCR-GradeCSync (eGCS) v1.0</span>
+                <button class="btn-logout" id="btn-logout" title="Log-out">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                        <path
+                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                    </svg>
+                </button>
+            </section>
+            <section class="secondary-nav">
+                <button class="submit-button" id="submit-button">Finalized</button>
+                <button class="clear-button" id="clear-button">Clear</button>
+                <span class="file-name" id="file-name"></span>
+            </section>
+        </nav>
+    </header>
+
+    <!--  -->
+    <main> 
+        <section class="container input-file-container"> 
+            <div class="dropzone" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)"> 
+                <label for="input-file" class="input-label" > Drag your files here… </label> 
+                    <input id="input-file" type="file" accept=".csv" draggable="true" ondragstart="dragStartHandler(event)"/> 
+                </div> 
+            </section> 
+            <section class="container table-container"> 
+                <div class="table-sub-container">
+
+                </div>
+            </section>
+        </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script>
+        
+const submitBtn = document.getElementById('submit-button');
+const clearBtn = document.getElementById('clear-button');
+const fileNameEl = document.getElementById('file-name');
+const secondaryNav = document.querySelector('.secondary-nav');
+const dropzone = document.querySelector('.input-file-container');
+const logoutBtn = document.getElementById('btn-logout');
+
+var results;
+
+
+
+function dropHandler(event) {
+    
+
+    const selectedFile = event.dataTransfer.files[0];
+    Papa.parse(selectedFile, {
+        skipEmptyLines: true,
+        complete: function(result){
+            //read every file then insert it to a array
+            displayTable(result.data);
+            var csv = Papa.unparse(result.data);
+    Papa.parse(csv,{
+        header: true,
+        complete: function(result){
+            results=result;
+        }
+    })
+              
+        }
+
+    });
+
+   // Truncate file name
+   let fileName = selectedFile.name;
+   const maxCharacter = 16;
+   fileNameEl.textContent = fileName.length >= maxCharacter ? fileName.substring(0, maxCharacter) + "..." : fileName;
+
+   // Remove dropzone
+   dropzone.style.display = 'none';
+
+   // Show secondary navigation
+   secondaryNav.style.display = 'flex';
+   adjustPaddingTop();
+   // prevent the default behavior of opening the file as a link
+   event.preventDefault(); 
+}
+
+function dragOverHandler(event) {
+    // prevent the default behavior of opening the file as a link
+    event.preventDefault();
+}
+
+// Handle file submission
+const fileInput = document.getElementById('input-file');
+fileInput.addEventListener('change', (event) => {
+    // Parse CSV
+    const selectedFile = event.target.files[0];
+    Papa.parse(selectedFile, {
+        skipEmptyLines: true,
+        complete: function(result){
+            //read every file then insert it to a array
+            
+            displayTable(result.data);
+            savedata();  
+        }
+    });
+
+    // Truncate file name
+    let fileName = selectedFile.name;
+    let maxCharacter = 16;
+    fileNameEl.textContent = fileName.length >= maxCharacter ? fileName.substring(0, maxCharacter) + "..." : fileName;
+
+    // Remove dropzone
+    dropzone.style.display = 'none';
+
+    // Show secondary navigation
+    secondaryNav.style.display = 'flex';
+
+    adjustPaddingTop();
+});
+
+function savedata(){
+    Papa.parse(document.getElementById('input-file').files[0],
+        {
+            //ignore header
+            header: true,
+            //skip empty row
+            skipEmptyLines: true,
+            complete: function(result){
+            results=result;
+                
+            }
+            
+  
+            }); 
+        }
+        function dropdata(data){
+            Papa.parse(document.getElementById('input-file').files[0],
+                {
+                    //ignore header
+                    header: true,
+                    //skip empty row
+                    skipEmptyLines: true,
+                    complete: function(result){
+                    results=result;
+                        
+                    }
+                    
+          
+                    }); 
+                }
+
+// Handle rendering table
+const tableContainer = document.querySelector('.table-sub-container');
+function displayTable(data) {
+    // Create table
+    const table = document.createElement('table');
+
+    // Create header row
+    const headerRow = table.insertRow(0);
+    for (const header of data[0]) {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    }
+
+    // Create data rows
+    for (let i = 1; i < data.length; i++) {
+        const rowData = data[i];
+        const row = table.insertRow(i);
+
+        for (const value of rowData) {
+            const cell = row.insertCell();
+            cell.textContent = value;
+        }
+    }
+
+    clearTable();
+    tableContainer.appendChild(table);
+}
+
+// Handle Clear
+clearBtn.addEventListener('click', () => {
+    fileInput.value = null;
+    fileNameEl.textContent = '';
+    clearTable();
+
+    // Show dropzone again
+    dropzone.style.display = '';
+
+    // Hide secondary navigation bar again
+    secondaryNav.style.display = '';
+})
+
+// Handle clear table
+function clearTable() {
+    const tableContainer = document.querySelector('.table-sub-container');
+    while (tableContainer.firstChild) {
+        tableContainer.removeChild(tableContainer.firstChild);
+    }
+}
+
+// Handle logout
+logoutBtn.addEventListener('click', () => {
+    window.location.assign("http://e-class-record-cloud-sync.fast-page.org");
+})
+
+// Adjust 'main' padding dynamically
+function adjustPaddingTop() {
+    const headerHeight = document.querySelector('header').offsetHeight;
+    document.querySelector('main').style.paddingTop = `${headerHeight}px`;
+}
+adjustPaddingTop();
+window.addEventListener('resize', adjustPaddingTop);
+
+// Handle highlight selected table rows 
+let selectedRow = null;
+document.querySelector('.table-sub-container').addEventListener('click', event => {
+    if (event.target.tagName === 'TD') {
+        const clickedRow = event.target.parentNode;
+        if (clickedRow !== selectedRow) {
+            if (selectedRow) {
+                selectedRow.classList.remove('selected-row');
+            }
+            clickedRow.classList.add('selected-row');
+            selectedRow = clickedRow;
+        }
+    }
+});
+    </script>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDFWV4k9-XmABgNGmleyXLTcuEn41rMHK8",
+    authDomain: "hackathon-26f12.firebaseapp.com",
+    databaseURL: "https://hackathon-26f12-default-rtdb.firebaseio.com",
+    projectId: "hackathon-26f12",
+    storageBucket: "hackathon-26f12.appspot.com",
+    messagingSenderId: "1071789540560",
+    appId: "1:1071789540560:web:6227da20f3a3a3a9ab0ad5"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  import {
+    getFirestore, doc, getDoc, collection, addDoc, setDoc, updateDoc, deleteDoc, deleteField
+  }
+  from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
+  const db = getFirestore();
+
+  //send verification via email
+  var Email = { send: function (a) { return new Promise(function (n, e) 
+    { a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send"; var t = JSON.stringify(a); Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, 
+    function (e) { n(e) }) }) }, ajaxPost: function (e, n, t) 
+    { var a = Email.createCORSRequest("POST", e); a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), 
+    a.onload = function () { var e = a.responseText; null != t && t(e) }, a.send(n) }, ajax: function (e, n) 
+    { var t = Email.createCORSRequest("GET", e); t.onload = function () { var e = t.responseText; null != n && n(e) }, t.send() }, createCORSRequest: 
+    function (e, n) { var t = new XMLHttpRequest; return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t } };
+
+    var teacher_id = localStorage.getItem('teacher_id');
+    var teacher_name = localStorage.getItem('teacher_name');
+
+    let count = 0; 
+
+    var stdnum, stdname , academic, trimester , section, day , time, cc , cd, prelim , midterm, finals
+    , remark, cu,fn, en, email ;
+
+
+const submitBtn = document.getElementById('submit-button');
+    
+    document.getElementById('submit-button').addEventListener('click', ()=>{
+    
+        try {
+            for (let i=0; i<results.data.length;i++){
+                stdnum = results.data[i].STUDENT_NUM;
+                stdname = results.data[i].STUDENT_NAME;
+                academic = results.data[i].ACADEMIC_YEAR;
+                trimester = results.data[i].TRIMESTER;
+                section = results.data[i].SECTION;
+                day = results.data[i].DAY;
+                time = results.data[i].TIME;
+                cc = results.data[i].COURSE_CODE;
+                cd = results.data[i].COURSE_DESCRIPTION;
+                prelim = results.data[i].PRELIM_GRADE;
+                midterm = results.data[i].MIDTERM_GRADE;
+                finals = results.data[i].FINAL_GRADE;
+                remark = results.data[i].REMARK;
+                cu = results.data[i].CREDIT_UNITS;
+                fn = results.data[i].FACULTY_NAME;
+                en = results.data[i].ECR_NAME;
+                email=results.data[i].EMAIL; 
+                     
+        
+                    //for Verification Only
+                if(prelim == "" && midterm=="" && finals==""){
+                    var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                    setDoc(
+                    ref, {
+                        STUDENT_NUM : stdnum,
+                        STUDENT_NAME : stdname,
+                        ACADEMIC_YEAR : academic,
+                        EMAIL_ADDRESS : email,
+                        TRIMESTER : trimester,
+                        SECTION : section,
+                        DAY : day,
+                        TIME : time,
+                        COURSE_CODE : cc,
+                        COURSE_DESCRIPTION : cd,
+                        PRELIM : prelim,
+                        MIDTERM : midterm,
+                        FINALS : finals,
+                        REMARK : remark,
+                        CREDIT_UNITS : cu,
+                        FACULTY_NAME : fn,
+                        }
+                        
+                    )        
+                        generateVerifCode();
+                        var verificationCode = generateVerifCode();
+                        var ref = doc(db, "GENERATE_CODE", verificationCode);
+                            setDoc(
+                            ref, {
+                                StudentID : stdnum,
+                                CourseCode : cc,
+                                TeacherName : teacher_name,
+                                TeacherID : teacher_id,
+                                sem : trimester,
+                                StudentEmail : email
+                                }
+                            )
+            
+                    //send verification email for student registration/re-register
+                        Email.send({
+                            Host : "smtp.elasticemail.com",
+                            Username : "guzmancarlo.123@gmail.com",
+                            Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                            // backup Password : "76255F8348DC19DB61D000EBDBDB25AB5220",
+                            To : email,
+                            From : "ecr.gradecloudsync@gmail.com",
+                            Subject : "Welcome to eCR-GradeCSync (eGCS) - Your Academic Hub!" ,
+                            Body : "<b><h1>Dear, " + stdname
+                                + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                                + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+                                + "</h4></b><br>"
+                                + "<br> Registration Details: " 
+                                + "<br>"
+                                + "<br> Student ID: " + stdnum
+                                + "<br> Teacher Name: " + teacher_name
+                                + "<br> Course Enrolled: " + cc
+                                + "<br><h2> Verfication Code: " + verificationCode   
+                                + "</h2><br>"
+                                + "<br> <h4><i>Just copy and paste your subject verification code<i></h4>"
+                                + "<p style='text-align: center;'><i><b>Note: Make sure you have received all your Subjects' verification code for this trimester before you register</b></i></p>"
+                                + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_registration.html' style='background-color: #4CAF50; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Click to Register Now</a></p></h2>"
+                                + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                                + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                                + "<br> Best regards,"
+                                + "<br>"
+                                + "<br> eCR-GradeCSync (eGCS) Team "
+                               
+                        })
+                        .then(()=>{
+                            if(count == i){
+                            alert("Success! Verification codes for your students have been successfully uploaded and sent to their respective email addresses.");
+                            
+                            }
+                            else{
+                                count + 1;
+                            }
+                        })
+                        .catch((error)=>{
+                            alert("Added failed:"+error);
+                        });
+    
+                        //For Prelim Grades Only
+                }else if(midterm=="" && finals==""){
+                    var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                    setDoc(
+                    ref, {
+                        STUDENT_NUM : stdnum,
+                        STUDENT_NAME : stdname,
+                        ACADEMIC_YEAR : academic,
+                        EMAIL_ADDRESS : email,
+                        TRIMESTER : trimester,
+                        SECTION : section,
+                        DAY : day,
+                        TIME : time,
+                        COURSE_CODE : cc,
+                        COURSE_DESCRIPTION : cd,
+                        PRELIM : prelim,
+                        MIDTERM : midterm,
+                        FINALS : finals,
+                        REMARK : remark,
+                        CREDIT_UNITS : cu,
+                        FACULTY_NAME : fn,
+                        }
+                        
+                    )
+    
+                    //send email for Prelim grade
+                    Email.send({
+                        Host : "smtp.elasticemail.com",
+                        Username : "guzmancarlo.123@gmail.com",
+                        Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                        To : email,
+                        From : "ecr.gradecloudsync@gmail.com",
+                        Subject : "Prelims Grade in " + cc + " Now Available for Viewing" ,
+                        Body : "<b><h1>Dear, " + stdname
+                            + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                            + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+    
+                            + "</h4></b><br>"
+                            + "<br> Grade Details: " 
+                            + "<br>"
+                            + "<br> Student ID: " + stdnum
+                            + "<br> Teacher Name: " + teacher_name
+                            + "<br> Course Enrolled: " + cc
+                            + "<br><h2> Prelims Grade: " + prelim   
+                            + "</h2><br>"
+                            + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                            + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                            + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                            + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                            + "<br> Best regards,"
+                            + "<br>"
+                            + "<br> eCR-GradeCSync (eGCS) Team "
+                           
+                    })
+                    .then(()=>{
+                        if(count == i){
+                        alert("Success! PRELIM grades have been uploaded, and notifications have been sent to your students via email.");
+                        }
+                        else{
+                            count + 1;
+                        }
+                    })
+                    .catch((error)=>{
+                        alert("Added failed:"+error);
+                    });
+    
+                }else if(finals==""){
+                    var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                    setDoc(
+                    ref, {
+                        STUDENT_NUM : stdnum,
+                        STUDENT_NAME : stdname,
+                        ACADEMIC_YEAR : academic,
+                        EMAIL_ADDRESS : email,
+                        TRIMESTER : trimester,
+                        SECTION : section,
+                        DAY : day,
+                        TIME : time,
+                        COURSE_CODE : cc,
+                        COURSE_DESCRIPTION : cd,
+                        PRELIM : prelim,
+                        MIDTERM : midterm,
+                        FINALS : finals,
+                        REMARK : remark,
+                        CREDIT_UNITS : cu,
+                        FACULTY_NAME : fn,
+                        }
+                        
+                    )
+    
+                    //send email for Midterm grade
+                    Email.send({
+                        Host : "smtp.elasticemail.com",
+                        Username : "guzmancarlo.123@gmail.com",
+                        Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                        To : email,
+                        From : "ecr.gradecloudsync@gmail.com",
+                        Subject : "Midterms Grade in " + cc + " Now Available for Viewing" ,
+                        Body : "<b><h1>Dear, " + stdname
+                            + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                            + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+    
+                            + "</h4></b><br>"
+                            + "<br> Grade Details: " 
+                            + "<br>"
+                            + "<br> Student ID: " + stdnum
+                            + "<br> Teacher Name: " + teacher_name
+                            + "<br> Course Enrolled: " + cc
+                            + "<br> Prelims Grade: " + prelim 
+                            + "<br><h2> Midterms Grade: " + midterm   
+                            + "</h2><br>"
+                            + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                            + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                            + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                            + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                            + "<br> Best regards,"
+                            + "<br>"
+                            + "<br> eCR-GradeCSync (eGCS) Team "
+                           
+                    })
+                    .then(()=>{
+                        if(count == i){
+                            alert("Success! MIDTERM grades have been uploaded, and notifications have been sent to your students via email.");
+                            window.location.assign("http://e-class-record-cloud-sync.fast-page.org/Teacher_Workplace.html");
+                        }
+                        else{
+                            count + 1;
+                        }
+                    })
+                    .catch((error)=>{
+                        alert("Added failed:"+error);
+                    });
+                }else if(!finals==""){
+                    
+                    var ref = doc(db, "CLASS_RECORD",stdnum,cc+trimester,trimester);
+                    setDoc(
+                    ref, {
+                        STUDENT_NUM : stdnum,
+                        STUDENT_NAME : stdname,
+                        ACADEMIC_YEAR : academic,
+                        EMAIL_ADDRESS : email,
+                        TRIMESTER : trimester,
+                        SECTION : section,
+                        DAY : day,
+                        TIME : time,
+                        COURSE_CODE : cc,
+                        COURSE_DESCRIPTION : cd,
+                        PRELIM : prelim,
+                        MIDTERM : midterm,
+                        FINALS : finals,
+                        REMARK : remark,
+                        CREDIT_UNITS : cu,
+                        FACULTY_NAME : fn,
+                        }
+                        
+                    )
+    
+                    //send email for Finals grade
+                    Email.send({
+                        Host : "smtp.elasticemail.com",
+                        Username : "guzmancarlo.123@gmail.com",
+                        Password : "EC1DDABA0B7E4D10378C0E9FCCD26459D54D",
+                        To : email,
+                        From : "ecr.gradecloudsync@gmail.com",
+                        Subject : "Finals Grade in " + cc + " Now Available for Viewing" ,
+                        Body : "<b><h1>Dear, " + stdname
+                            + "</h1><h4> Welcome to eCR-GradeCSync (eGCS) – Your Academic Hub for streamlined grading and transparent student evaluation at ICCT COLLEGE!" 
+                            + "<br> Thank you for choosing eCR-GradeCSync (eGCS) to enhance your academic experience. We are thrilled to have you on board."
+                            + "</h4></b><br>"
+                            + "<br> Grade Details: " 
+                            + "<br>"
+                            + "<br> Student ID: " + stdnum
+                            + "<br> Teacher Name: " + teacher_name
+                            + "<br> Course Enrolled: " + cc
+                            + "<br> Prelims Grade: " + prelim 
+                            + "<br> Midterms Grade: " + midterm  
+                            + "<br><h2> Finals Grade: " + finals   
+                            + "</h2><br>"
+                            + "<p style='text-align: center;'><i><b>You can also view your grades in eGCS student page by clicking this button</b></i></p>"
+                            + "<h2><p style='text-align: center;'><a href='http://e-class-record-cloud-sync-student.fast-page.org/student_ui.html' style='background-color: #002060; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;'>Go to eCR-GradeCSync</a></p></h2>"
+                            + "<br> Your journey with eCR-GradeCSync promises seamless grading, real-time updates, and enhanced transparency in your academic assessments. With our user-friendly platform, "
+                            + "<br>you'll have quick access to your grades and valuable insights into your academic progress. "
+                            + "<br> Best regards,"
+                            + "<br>"
+                            + "<br> eCR-GradeCSync (eGCS) Team "
+                           
+                    })
+                    .then(()=>{
+                        if(count == i){
+                            alert("Success! FINAL grades have been uploaded, and notifications have been sent to your students via email.");
+                         
+                        }
+                        else{
+                            count + 1;
+                        }
+                    })
+                    .catch((error)=>{
+                        alert("Added failed:"+error);
+                    });
+                }                             
+            }
+        } catch (error) {
+            alert(error)
+        }
+    });
+    function generateVerifCode() {
+        const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        //const specialCharacters = '!#*_';
+    
+            //put all characters in one variable (except special character)
+        const allCharacters = uppercaseLetters + numbers +lowercaseLetters;
+        let randomVerifCode = '';
+    
+        // Include at least one uppercase letter, one number, and one special character
+        randomVerifCode += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+        randomVerifCode += numbers[Math.floor(Math.random() * numbers.length)];
+        randomVerifCode += lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];
+    
+        // Complete the rest of the password with random characters
+        for (let i = 1; i <= 5; i++) {
+            randomVerifCode += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+        }
+        return randomVerifCode;
+        }
+    </script>   
+</body>
+
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon</title>
+    <style>
+        .container {
+    /* outline: 1px solid; */
+    max-width: 1536px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* 2xl */
+@media (max-width: 1536px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* xl */
+@media (max-width: 1280px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+/* lg */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+/* md */
+@media (max-width: 768px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+/* sm */
+@media (max-width: 640px) {
+    .container {
+        max-width: 475px;
+    }
+}
+
+/* xs */
+@media (max-width: 475px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&family=Roboto&display=swap');
+
+
+nav {
+    background-color: #1e40af;
+}
+
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 0.6rem;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+.logo_box>img {
+    width: 150px;
+}
+
+.navigation-links {
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+}
+
+.navigation-links li a {
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    border-bottom: 2px solid transparent;
+
+    font-family: 'Roboto', sans-serif;
+
+    transition: all ease 200ms;
+}
+
+.navigation-links li a.active {
+    color: #fde047;
+    border-bottom: 2px solid #fde047;
+}
+
+.navigation-links li a:hover {
+    color: #fde047;
+    border-bottom: 2px solid #fde047;
+}
+
+/*  */
+.user-info_box {
+    background-color: #dbeafe;
+    padding-block: 0.19rem;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    color: #334155;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&family=Roboto&display=swap');
+
+:root {
+    --clr-slate-950: #020617;
+    --clr-slate-900: #0f172a;
+    --clr-slate-800: #1e293b;
+    --clr-slate-700: #334155;
+    --clr-slate-600: #475569;
+    --clr-slate-400: #94a3b8;
+    --clr-slate-300: #cbd5e1;
+    --clr-slate-200: #e2e8f0;
+    --clr-slate-100: #f1f5f9;
+    --clr-slate-50: #f8fafc;
+
+    --bx-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+
+    --fnt-primary: 'Roboto', sans-serif;
+}
+
+table {
+    box-shadow: var(--bx-shadow);
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2rem auto;
+}
+.variableSelect{
+    margin-left: 30px;
+}
+
+caption {
+    font-family: 'Roboto', sans-serif;
+    color: var(--clr-slate-600);
+    color: #9ca3af;
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: .6rem;
+}
+
+tr:nth-child(odd) {
+    background-color: var(--clr-slate-100);
+}
+
+tr {
+    transition: all 600ms ease;
+}
+
+tr:hover {
+    background-color: var(--clr-slate-200);
+}
+
+th {
+    background-color: #dbeafe;
+    font-family: 'Poppins', sans-serif;
+    color: var(--clr-slate-700);
+}
+
+td {
+    font-family: 'Roboto', sans-serif;
+    color: var(--clr-slate-700);
+}
+
+td,
+th {
+    text-align: left;
+    padding: 8px;
+}
+
+/* Utility */
+.mt-md {
+    margin-top: 2rem;
+}
+
+        
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <section class="container navigation-bar">
+                <div class="logo_box">
+                    <!-- Logo goes here -->
+                </div>
+                <ul class="navigation-links">
+                    <li><button id="logout_btn">Logout</button></li>
+                </ul>
+            </section>
+        </nav>
+        <section class="user-info_box">
+            <span class="variableSelect">Student ID & Name:</span><p class="variableSelect" id="stname"></p>
+            <label for="variableSelect" class="variableSelect">Select Semester: </label>
+            <select id="variableSelect">
+                <option value="1st">First Semester</option>
+                <option value="2nd">Second Semester</option>
+                <option value="3rd">Third Semester</option>
+                <!-- Add more options as needed -->
+            </select>
+        </section>
+    </header>
+    <main>
+        <section class="mt-md">
+            <section class="container">
+                <div class="first_sem">
+                <table>
+                    <caption><span id="tri_sem"></span><span>  ||  </span><span id="school_year"></span></caption>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Description</th>
+                        <th>Prelim Grade</th>
+                        <th>Midterm Grade</th>
+                        <th>Final Grade</th>
+                        <th>Section</th>
+                        <th>Instructor</th>
+                        <th>Credit Units</th>
+                    </tr>
+                    <tr>
+                        <td id="sub1"></td>
+                        <td id="cd1"></td>
+                        <td id="pr1"></td>
+                        <td id="md1"></td>
+                        <td id="fn1"></td>
+                        <td id="section1"></td>
+                        <td id="f_n1"></td>
+                        <td id="cu1"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub2"></td>
+                        <td id="cd2"></td>
+                        <td id="pr2"></td>
+                        <td id="md2"></td>
+                        <td id="fn2"></td>
+                        <td id="section2"></td>
+                        <td id="f_n2"></td>
+                        <td id="cu2"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub3"></td>
+                        <td id="cd3"></td>
+                        <td id="pr3"></td>
+                        <td id="md3"></td>
+                        <td id="fn3"></td>
+                        <td id="section3"></td>
+                        <td id="f_n3"></td>
+                        <td id="cu3"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub4"></td>
+                        <td id="cd4"></td>
+                        <td id="pr4"></td>
+                        <td id="md4"></td>
+                        <td id="fn4"></td>
+                        <td id="section4"></td>
+                        <td id="f_n4"></td>
+                        <td id="cu4"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub5"></td>
+                        <td id="cd5"></td>
+                        <td id="pr5"></td>
+                        <td id="md5"></td>
+                        <td id="fn5"></td>
+                        <td id="section5"></td>
+                        <td id="f_n5"></td>
+                        <td id="cu5"></td>
+                    </tr>
+                    <tr>
+                        <td id="sub6"></td>
+                        <td id="cd6"></td>
+                        <td id="pr6"></td>
+                        <td id="md6"></td>
+                        <td id="fn6"></td>
+                        <td id="section6"></td>
+                        <td id="f_n6"></td>
+                        <td id="cu6"></td>
+                    </tr>
+                </div>
+                </table>
+                
+            </section>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script type="module">
+        
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDFWV4k9-XmABgNGmleyXLTcuEn41rMHK8",
+    authDomain: "hackathon-26f12.firebaseapp.com",
+    databaseURL: "https://hackathon-26f12-default-rtdb.firebaseio.com",
+    projectId: "hackathon-26f12",
+    storageBucket: "hackathon-26f12.appspot.com",
+    messagingSenderId: "1071789540560",
+    appId: "1:1071789540560:web:6227da20f3a3a3a9ab0ad5"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  import {
+    getFirestore, doc, getDoc, collection, addDoc, setDoc, updateDoc, deleteDoc, deleteField
+  }
+  from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+  
+  //SUBJECT01 getting the value of table data row 1
+  var sub1 = document.getElementById("sub1");
+  var cd1 =document.getElementById("cd1");
+  var pr1 = document.getElementById("pr1");
+  var md1 =document.getElementById("md1");
+  var fn1 = document.getElementById("fn1");
+  var section1 =document.getElementById("section1");
+  var f_n1 = document.getElementById("f_n1");
+  var cu1 = document.getElementById("cu1");
+  
+  //SUBJECT02 getting the value of table data row 2
+  var sub2 = document.getElementById("sub2");
+  var cd2 =document.getElementById("cd2");
+  var pr2 = document.getElementById("pr2");
+  var md2 =document.getElementById("md2");
+  var fn2 = document.getElementById("fn2");
+  var section2 =document.getElementById("section2");
+  var f_n2 = document.getElementById("f_n2");
+  var cu2 = document.getElementById("cu2");
+
+  //SUBJECT01 getting the value of table data row 1
+  var sub3 = document.getElementById("sub3");
+  var cd3 =document.getElementById("cd3");
+  var pr3 = document.getElementById("pr3");
+  var md3 =document.getElementById("md3");
+  var fn3 = document.getElementById("fn3");
+  var section3 =document.getElementById("section3");
+  var f_n3 = document.getElementById("f_n3");
+  var cu3 = document.getElementById("cu3");
+  
+  //SUBJECT02 getting the value of table data row 2
+  var sub4 = document.getElementById("sub4");
+  var cd4 =document.getElementById("cd4");
+  var pr4 = document.getElementById("pr4");
+  var md4 =document.getElementById("md4");
+  var fn4 = document.getElementById("fn4");
+  var section4 =document.getElementById("section4");
+  var f_n4 = document.getElementById("f_n4");
+  var cu4 = document.getElementById("cu4");
+
+  //SUBJECT01 getting the value of table data row 1
+  var sub5 = document.getElementById("sub5");
+  var cd5 =document.getElementById("cd5");
+  var pr5 = document.getElementById("pr5");
+  var md5 =document.getElementById("md5");
+  var fn5 = document.getElementById("fn5");
+  var section5 =document.getElementById("section5");
+  var f_n5 = document.getElementById("f_n5");
+  var cu5 = document.getElementById("cu5");
+  
+  //SUBJECT02 getting the value of table data row 2
+  var sub6 = document.getElementById("sub6");
+  var cd6 =document.getElementById("cd6");
+  var pr6 = document.getElementById("pr6");
+  var md6 =document.getElementById("md6");
+  var fn6 = document.getElementById("fn6");
+  var section6 =document.getElementById("section6");
+  var f_n6 = document.getElementById("f_n6");
+  var cu6 = document.getElementById("cu6");
+
+  var stdname;
+  var data1;
+  var data2;
+  var data3;
+  var data4;
+  var data5;
+  var data6;
+  var stname = document.getElementById("stname");
+  var tri_sem = document.getElementById("tri_sem");
+  var school_year = document.getElementById("school_year");
+  var logout_btn = document.getElementById("logout_btn");
+
+  const db = getFirestore();
+
+  var selectedVariable ="1st";
+  selectedVariable = variableSelect.value;
+  
+
+
+
+//checking if there is an error in the program
+
+  try
+  {
+
+    async function LoadDataAdvance(){
+      var ref = doc(db, "STUDENT_LIST","STUDENT_DATA",localStorage.getItem('student_id'),selectedVariable);
+      const docsnap = await getDoc(ref);
+      if(docsnap.exists()){  
+      //assigning value from firestore to table data
+      stdname = docsnap.data().name;
+      data1 = docsnap.data().subOne;
+      data2 = docsnap.data().subTwo;
+      data3 = docsnap.data().subThree;
+      data4 = docsnap.data().subFour;
+      data5 = docsnap.data().subFive;
+      data6 = docsnap.data().subSix;
+      stname.innerHTML = localStorage.getItem('student_id') +"_"+ stdname;
+    }
+  }
+
+  //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject01(){
+        var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data1 + selectedVariable,selectedVariable);
+        const docsnap = await getDoc(ref);
+
+        if(docsnap.exists()){
+          //assigning value from firestore to table data
+          sub1.innerHTML = docsnap.data().COURSE_CODE;
+          cd1.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+          pr1.innerHTML = docsnap.data().PRELIM;
+          md1.innerHTML=docsnap.data().MIDTERM;
+          fn1.innerHTML = docsnap.data().FINALS;
+          section1.innerHTML=docsnap.data().SECTION;
+          f_n1.innerHTML = docsnap.data().FACULTY_NAME;
+          cu1.innerHTML=docsnap.data().CREDIT_UNITS; 
+          tri_sem.innerHTML=docsnap.data().TRIMESTER;
+          school_year.innerHTML=docsnap.data().ACADEMIC_YEAR;
+
+          }
+      }
+
+      //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject02(){
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data2+selectedVariable,selectedVariable);
+      const docsnap = await getDoc(ref);
+      if(docsnap.exists()){  
+      //assigning value from firestore to table data
+      sub4.innerHTML = docsnap.data().COURSE_CODE;
+      cd4.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+      pr4.innerHTML = docsnap.data().PRELIM;
+      md4.innerHTML=docsnap.data().MIDTERM;
+      fn4.innerHTML = docsnap.data().FINALS;
+      section4.innerHTML=docsnap.data().SECTION;
+      f_n4.innerHTML = docsnap.data().FACULTY_NAME;
+      cu4.innerHTML=docsnap.data().CREDIT_UNITS;
+      tri_sem.innerHTML=docsnap.data().TRIMESTER;
+          school_year.innerHTML=docsnap.data().ACADEMIC_YEAR;
+        }
+    }
+
+    //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+      async function subject03(){
+        var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data3+selectedVariable,selectedVariable);
+        const docsnap = await getDoc(ref);
+        if(docsnap.exists()){  
+        //assigning value from firestore to table data
+        sub2.innerHTML = docsnap.data().COURSE_CODE;
+        cd2.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+        pr2.innerHTML = docsnap.data().PRELIM;
+        md2.innerHTML=docsnap.data().MIDTERM;
+        fn2.innerHTML = docsnap.data().FINALS;
+        section2.innerHTML=docsnap.data().SECTION;
+        f_n2.innerHTML = docsnap.data().FACULTY_NAME;
+        cu2.innerHTML=docsnap.data().CREDIT_UNITS;
+        tri_sem.innerHTML=docsnap.data().TRIMESTER;
+          school_year.innerHTML=docsnap.data().ACADEMIC_YEAR;
+          }
+      }
+
+      //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject04(){
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data4+selectedVariable,selectedVariable);
+      const docsnap = await getDoc(ref);
+
+      if(docsnap.exists()){
+        //assigning value from firestore to table data
+        sub3.innerHTML = docsnap.data().COURSE_CODE;
+        cd3.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+        pr3.innerHTML = docsnap.data().PRELIM;
+        md3.innerHTML=docsnap.data().MIDTERM;
+        fn3.innerHTML = docsnap.data().FINALS;
+        section3.innerHTML=docsnap.data().SECTION;
+        f_n3.innerHTML = docsnap.data().FACULTY_NAME;
+        cu3.innerHTML =docsnap.data().CREDIT_UNITS;
+        tri_sem.innerHTML=docsnap.data().TRIMESTER;
+          school_year.innerHTML=docsnap.data().ACADEMIC_YEAR; 
+        }
+    }
+  
+
+    //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject05(){
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data5 + selectedVariable,selectedVariable);
+      const docsnap = await getDoc(ref);
+
+      if(docsnap.exists()){
+        //assigning value from firestore to table data
+        sub5.innerHTML = docsnap.data().COURSE_CODE;
+        cd5.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+        pr5.innerHTML = docsnap.data().PRELIM;
+        md5.innerHTML=docsnap.data().MIDTERM;
+        fn5.innerHTML = docsnap.data().FINALS;
+        section5.innerHTML=docsnap.data().SECTION;
+        f_n5.innerHTML = docsnap.data().FACULTY_NAME;
+        cu5.innerHTML=docsnap.data().CREDIT_UNITS;
+        tri_sem.innerHTML=docsnap.data().TRIMESTER;
+          school_year.innerHTML=docsnap.data().ACADEMIC_YEAR; 
+        }
+    }
+  //getting/verifying the data from firestore using the file path from the data collect in log-in form "Global Variable".
+    async function subject06(){
+      var ref = doc(db, "CLASS_RECORD",localStorage.getItem('student_id'),data6 + selectedVariable,selectedVariable);
+      const docsnap = await getDoc(ref);
+      if(docsnap.exists()){  
+      //assigning value from firestore to table data
+      sub6.innerHTML = docsnap.data().COURSE_CODE;
+      cd6.innerHTML=docsnap.data().COURSE_DESCRIPTION;
+      pr6.innerHTML = docsnap.data().PRELIM;
+      md6.innerHTML=docsnap.data().MIDTERM;
+      fn6.innerHTML = docsnap.data().FINALS;
+      section6.innerHTML=docsnap.data().SECTION;
+      f_n6.innerHTML = docsnap.data().FACULTY_NAME;
+      cu6.innerHTML=docsnap.data().CREDIT_UNITS;
+      tri_sem.innerHTML=docsnap.data().TRIMESTER;
+      school_year.innerHTML=docsnap.data().ACADEMIC_YEAR;
+        }
+    }
+      
+    setInterval(function() {
+      subject01();
+      subject02();
+      subject03();
+      subject04();
+      subject05();
+      subject06();
+    }, 10);
+    
+ //autoload the function without human interference     
+    window.onload=function(){
+      selectedVariable = variableSelect.value;
+      LoadDataAdvance();  
+  }
+  function exitlogout(){
+  window.open("index.html");
+  window.close();
+  }
+    
+  logout_btn.addEventListener('click',exitlogout);    
+       
+        //calling function
+        variableSelect.addEventListener('change', function() {
+          selectedVariable = variableSelect.value;
+          LoadDataAdvance();
+          subject01();
+          subject02();
+          subject03();
+          subject04();
+          subject05();
+          subject06();
+          
+        });
+        
+        
+      }
+      catch(Error){
+        console.log(Error);
+      }
+      
+      
+        </script> 
+</body>
+
+</html>
