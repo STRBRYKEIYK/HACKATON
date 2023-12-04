@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spreadsheet Uploader</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        #logo {
+            width: 80px; /* Adjust as needed */
+            height: auto; /* Preserve aspect ratio */
+            margin-right: 20px; /* Adjust to provide space between the logo and the edge */
+            padding-left: 20px; /* Add padding to the left */
+        }
+
+        #drop_zone {
+            width: 300px;
+            height: 80px;
+            border: 2px dashed #000;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            color: #000;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            margin-top: 80px; /* Adjust to leave space for the navbar */
+        }
+
+        #drop_zone.uploaded {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        #drop_zone.hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        #view_button {
+            display: none;
+            width: 20%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        #view_button:hover {
+            background-color: #c0392b;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+        }
+
+        #file_input {
+            display: none;
+        }
+
+        #upload_status {
+            display: none;
+            margin-top: 10px;
+            align-items: center;
+            width: 100%;
+        }
+
+        #upload_status-bar-container {
+            width: 100%;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        #upload_status-bar {
+            width: 0;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 5px;
+            transition: width 2s ease-out;
+        }
+
+        #logout {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: auto; /* Pushes the logout link to the right */
+            padding-right: 20px; /* Add padding to the right */
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <img id="logo" src="icct_logo.png" alt="ICCT Logo">
+        <a id="logout" onclick="logout()">Log Out</a>
+    </div>
+    <div id="drop_zone" 
+         onclick="document.getElementById('file_input').click();"
+         onmouseenter="handleMouseEnter();"
+         onmouseleave="handleMouseLeave();"
+         ondragover="handleDragOver(event);"
+         ondragleave="handleDragLeave();"
+         ondrop="handleFileDrop(event);">
+        Click or Drag Spreadsheet Here
+        <input type="file" id="file_input" 
+               style="display: none;" 
+               onchange="uploadFile()">
+    </div>
+    <button id="view_button" onclick="viewSpreadsheet()">View Spreadsheet</button>
+    <div id="upload_status">
+        <p style="color: #fff; font-weight: bold;">Spreadsheet has been uploaded!</p>
+    </div>
+    <script>
+        function handleFileSelect(files) {
+            for (var i = 0, f; f = files[i]; i++) {
+                if (f.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                    f.type === 'application/vnd.ms-excel') {
+                    document.getElementById('view_button').style.display = 'block';
+                    document.getElementById('upload_status').style.display = 'flex';
+                    document.getElementById('drop_zone').classList.add('uploaded');
+                    document.getElementById('drop_zone').innerHTML = 'Spreadsheet Uploaded!';
+                } else {
+                    alert('Please upload a valid spreadsheet file.');
+                }
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            document.getElementById('drop_zone').classList.add('hover');
+        }
+
+        function handleDragLeave() {
+            document.getElementById('drop_zone').classList.remove('hover');
+        }
+
+        function handleMouseEnter() {
+            document.getElementById('drop_zone').style.opacity = 1;
+        }
+
+        function handleMouseLeave() {
+            document.getElementById('drop_zone').style.opacity = 0.8;
+        }
+
+        function handleFileDrop(event) {
+            event.preventDefault();
+            handleDragLeave();
+            var files = event.dataTransfer.files;
+            handleFileSelect(files);
+        }
+
+        function uploadFile() {
+            var input = document.getElementById('file_input');
+            var files = input.files;
+
+            handleFileSelect(files);
+
+            setTimeout(function () {
+                document.getElementById('upload_status-bar').style.width = '100%';
+                setTimeout(function () {
+                    document.getElementById('upload_status').style.display = 'none';
+                    document.getElementById('upload_status-bar').style.width = '0';
+                }, 3000);
+            }, 1000);
+        }
+
+        function viewSpreadsheet() {
+            alert('Viewing Spreadsheet Under Development');
+            // View Spreadsheet logic dito hahahha
+        }
+
+        function logout() {
+            alert('Logging out...');
+            // Logout then link papunta sa Login Area
+        }
+    </script>
+</body>
+</html>

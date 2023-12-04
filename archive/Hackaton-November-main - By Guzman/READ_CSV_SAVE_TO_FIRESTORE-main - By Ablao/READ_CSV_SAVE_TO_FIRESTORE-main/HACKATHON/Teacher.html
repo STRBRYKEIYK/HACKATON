@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher WorkPlace</title>
+    <link rel="stylesheet" href="/teacher.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<input type="file" id="UploadFile" accept=".csv"><br><br>
+<input type="text" id="text"/>
+<button id="view_csv">VIEW</button>
+<button id="uploadcofirm">SAVE</button>
+
+<div class="fill mt-3">
+    <table class="table Table-dark">
+        <thead>
+            <th>STUDENT_COUNT</th>
+            <th>STUDENT_NUMBER</th>
+            <th>STUDENT_NAME</th>
+            <th>ACADEMIC_YEAR</th>
+            <th>TRIMESTER</th>
+            <th>SECTION</th>
+            <th>DAY</th>
+            <th>TIME</th>
+            <th>COURSE_CODE</th>
+            <th>COURSE_DESCRIPTION</th>
+            <th>PRELIM_GRADE</th>
+            <th>MIDTERM_GRADE</th>
+            <th>FINAL_GRADE</th>
+            <th>REMARK</th>
+            <th>CREDIT_UNITS</th>
+            <th>FACULTY_NAME</th>
+            <th>ECR_NAME</th>
+        </thead>
+        <tbody id="tbody1"></tbody>
+    </table>
+</div>
+    
+
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+<script type="module" src="/read_save_retrive_data.js"></script>
+<script src="/viewdata.js"></script>
+</body>
+</html>
