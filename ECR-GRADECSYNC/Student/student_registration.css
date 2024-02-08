@@ -13,10 +13,95 @@
     padding: var(--sm) 0;
 }
 
+.verif-form {
+    width: 330px;
+    
+}
+
+.subject-inputs {
+    display: flex;
+}
+
+.subject-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.input-counter {
+    position: relative;
+}
+
+#counter{
+
+    display: inline-block;
+    width: 65px;
+    text-align: left;
+    padding-right: 20px;
+}
+
+#ok-button {
+    position: absolute; 
+    top: 0; 
+    border-radius: 5px; 
+    right: -1px; 
+    border: none; 
+    top: -1px;
+    font-size:  smaller;
+    text-align: center;
+    padding-left: 5px;
+    height: 28px;
+    width: 28px;
+    border-radius: 0%;
+}
+
+.counter {
+    height: 30px;
+    width: 30px;
+    padding-left: 10px;
+    text-align: center;
+}
+
 .subjects {
     padding: var(--sm) var(--sm) 0;
     border-radius: var(--brd-radius);
     background-color: var(--clr-slate-100);
+}
+
+#subinput1,
+#subinput2,
+#subinput3,
+#subinput4,
+#subinput5,
+#subinput6,
+#subinput7,
+#subinput8 {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+.veriflabel {
+    min-width: 30px;
+    max-width: 100%;
+    text-wrap:wrap;
+    overflow:hidden;
+}
+
+
+
+#sub_verification1,
+#sub_verification2,
+#sub_verification3,
+#sub_verification4,
+#sub_verification5,
+#sub_verification6 {
+    width: 90px;
+    height: 45px;
+    display: flex;
 }
 
 /* md */

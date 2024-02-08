@@ -112,7 +112,8 @@ h6 {
 /* Forms */
 .forms {
     background-color: var(--clr-slate-50);
-    max-width: 550px;
+   
+    max-width: 600px;
     padding: 2rem 2rem 3rem;
     box-shadow: var(--bx-shadow);
     border-radius: var(--brd-radius);
@@ -137,16 +138,36 @@ h6 {
     color: var(--clr-slate-800);
 }
 
+
+
+
+
 /* Input boxes */
 .inputs {
     padding: calc(var(--sm) - 5px);
     caret-color: var(--clr-secondary);
     background-color: white;
     color: var(--clr-slate-600);
-    border: 1px solid var(--clr-secondary);
-    border-radius: var(--brd-radius);
-    width: 100%;
-    min-height: 40px;
+    border: 1px solid var(--clr-secondary); 
+    border-radius: var(--brd-radius); 
+    width: 100%; 
+    min-height: 20px;  
+}
+
+/* for hiding element */
+.hidden {
+    display: none;
+}
+
+.veriflabel {
+    background: transparent;
+    max-height: 100%;
+    resize: none;
+    overflow: hidden;
+    vertical-align: middle;
+    align-items: center;
+    border: none;
+    font-size: smaller;
 }
 
 .inputs::placeholder {
@@ -198,12 +219,18 @@ h6 {
     place-items: center;
 }
 
+.counter {
+    font: smaller;
+    text-align: center;
+    width: 40px;
+    height: 10px;
+}
+
 
 /* Media Query */
 .container {
     /* outline: 1px solid; */
     margin-top: 20px;
-
     max-width: 1536px;
     margin-left: auto;
     margin-right: auto;
